@@ -38,8 +38,8 @@ public class MeditacaoMB implements Serializable {
 
     @Inject
     LoginMB loginMB;
-    @EJB
-    MeditacaoBean meditacaoBean;
+//    @EJB
+//    MeditacaoBean meditacaoBean;
     @EJB
     MeditacaoDAO meditacaoDAO;
 
@@ -83,6 +83,7 @@ public class MeditacaoMB implements Serializable {
 
     public String adicionarVersiculoDeApoio() {
         this.meditacao.adicionarVersiculoDeApoio(novoVersiculoDeApoio);
+        this.novoVersiculoDeApoio = "";
         ManagedBeanUtil.refresh();
         return "";
     }
@@ -95,6 +96,7 @@ public class MeditacaoMB implements Serializable {
 
     public String adicionarDecisao() {
         this.meditacao.adicionarDecisao(novaDecisao);
+        this.novaDecisao = "";
         ManagedBeanUtil.refresh();
         return "";
     }
@@ -153,7 +155,7 @@ public class MeditacaoMB implements Serializable {
         this.meditacao = meditacaoDAO.find(idMeditacao);
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-        meditacaoBean.iniciarMeditacao(meditacao, (Membro)session.getAttribute("usuarioLogado"));
+ //       meditacaoBean.iniciarMeditacao(meditacao, (Membro)session.getAttribute("usuarioLogado"));
         return "/pages/meditacao/inicioMeditacao.xhtml" + ManagedBeanUtil.REDIRECT;
     }
 

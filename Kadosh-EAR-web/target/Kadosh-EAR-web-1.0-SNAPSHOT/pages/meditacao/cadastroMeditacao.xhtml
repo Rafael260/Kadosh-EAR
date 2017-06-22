@@ -10,45 +10,111 @@
         <ui:define name="conteudo">
             <h:form style="font-size: 15px">
                 <p:panel header ="Cadastro de Meditação" style="text-align: center; margin-bottom: 20px">
-                    <p:panelGrid columns="2" style="border-style:none;margin-left: auto;margin-right: auto;text-align: left">
-                        <p:outputLabel value="Título"/>
-                        <p:inputText id="nome" value="#{meditacaoMB.meditacao.titulo}"/>
-                        <p:outputLabel value="Versículo Base"/>
-                        <p:inputText value="#{meditacaoMB.meditacao.versiculoBase}"/>
-                        <p:outputLabel value="Dia da semana"/>
-                        <p:selectOneMenu id="diaSemana" value="#{meditacaoMB.meditacao.diaSemana}">
-                            <f:selectItem itemLabel="Segunda" itemValue="Segunda" />
-                            <f:selectItem itemLabel="Terça" itemValue="Terça" />
-                            <f:selectItem itemLabel="Quarta" itemValue="Quarta" />
-                            <f:selectItem itemLabel="Quinta" itemValue="Quinta" />
-                            <f:selectItem itemLabel="Sexta" itemValue="Sexta" />
-                        </p:selectOneMenu>
-                        <p:outputLabel value="Aprofundando"/>
-                        <p:inputTextarea value="#{meditacaoMB.meditacao.aprofundando}" rows="10" cols="50"/>
-                        <p:outputLabel value="Versículos de apoio"/>
-                        <h:inputText value="#{meditacaoMB.novoVersiculoDeApoio}"/>
-                        <p:commandButton action="#{meditacaoMB.adicionarVersiculoDeApoio()}" value="Adicionar versículo"/>
-                        <p:dataTable value="#{meditacaoMB.meditacao.versiculosDeApoio}" var="versiculo">
+                    <p:panelGrid style="border-style:none;margin-left: auto;margin-right: auto;text-align: left">
+
+                        <p:row>
+                            <p:column colspan="1">
+                                <p:outputLabel style="font-weight: bold" value="Título "/>
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:inputText title="Digite aqui o título" size="70" id="nome" value="#{meditacaoMB.meditacao.titulo}"/>
+                                <p:watermark for="nome" value="Digite aqui o título da meditação"/>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
                             <p:column>
-                                <h:outputLabel value="#{versiculo}"/>
+                                <p:outputLabel style="font-weight: bold" value="Versículo Base"/>
                             </p:column>
                             <p:column>
-                                <p:commandButton icon="ui-icon-trash" title="Remover" action="#{meditacaoMB.removerVersiculoDeApoio(versiculo)}"/>
-                            </p:column>
-                        </p:dataTable>
-                        <p:outputLabel value="Ilustração"/>
-                        <p:inputTextarea value="#{meditacaoMB.meditacao.ilustracao}" rows="10" cols="50"/>
-                        <p:outputLabel value="Decisões"/>
-                        <h:inputText value="#{meditacaoMB.novaDecisao}"/>
-                        <p:commandButton action="#{meditacaoMB.adicionarDecisao()}" value="Adicionar Decisão"/>
-                        <p:dataTable value="#{meditacaoMB.meditacao.decisoes}" var="decisao">
-                            <p:column>
-                                <h:outputLabel value="#{decisao}"/>
+                                <p:inputText id="versoBase" size="30" value="#{meditacaoMB.meditacao.versiculoBase}"/>
+                                <p:watermark for="versoBase" value="Digite o versículo principal"/>
                             </p:column>
                             <p:column>
-                                <p:commandButton icon="ui-icon-trash" title="Remover" action="#{meditacaoMB.removerDecisao(decisao)}"/>
+                                <p:outputLabel style="font-weight: bold" value="Dia da semana"/>
                             </p:column>
-                        </p:dataTable>
+                            <p:column>
+                                <p:selectOneMenu id="diaSemana" value="#{meditacaoMB.meditacao.diaSemana}">
+                                    <f:selectItem itemLabel="Segunda" itemValue="Segunda" />
+                                    <f:selectItem itemLabel="Terça" itemValue="Terça" />
+                                    <f:selectItem itemLabel="Quarta" itemValue="Quarta" />
+                                    <f:selectItem itemLabel="Quinta" itemValue="Quinta" />
+                                    <f:selectItem itemLabel="Sexta" itemValue="Sexta" />
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="1">
+                                <p:outputLabel style="font-weight: bold" value="Aprofundando"/>
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:inputTextarea value="#{meditacaoMB.meditacao.aprofundando}" rows="10" cols="70" id="aprof"/>
+                                <p:watermark for="aprof" value="Digite aqui os ensinamentos retirados do texto principal"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="1">
+                                <p:outputLabel style="font-weight: bold" value="Versículos de apoio"/>
+                            </p:column>
+                            <p:column colspan="2">
+                                <h:inputText value="#{meditacaoMB.novoVersiculoDeApoio}" size="45" id="versoApoio"/>
+                                <p:watermark for="versoApoio" value="Que versículos complementam o texto?"/>
+                            </p:column>
+                            <p:column colspan="1">
+                                <p:commandButton action="#{meditacaoMB.adicionarVersiculoDeApoio()}" value="Adicionar versículo"/>
+                            </p:column>
+                        </p:row>
+                        <p:panelGrid/>
+                        <p:row>
+                            <p:column colspan="4">
+                                <p:dataTable value="#{meditacaoMB.meditacao.versiculosDeApoio}" var="versiculo">
+                                    <p:column colspan="3">
+                                        <h:outputLabel value="#{versiculo}"/>
+                                    </p:column>
+                                    <p:column colspan="1">
+                                        <p:commandButton icon="ui-icon-trash" title="Remover" action="#{meditacaoMB.removerVersiculoDeApoio(versiculo)}"/>
+                                    </p:column>
+                                </p:dataTable>        
+                            </p:column>
+                        </p:row>
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column colspan="1">
+                                    <p:outputLabel value="Ilustração" style="font-weight: bold"/>
+                                </p:column>
+                                <p:column colspan="3">
+                                    <p:inputTextarea value="#{meditacaoMB.meditacao.ilustracao}" rows="10" cols="70" id="ilust"/>
+                                    <p:watermark for="ilust" value="Adicione uma ilustração a sua meditação"/>
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column colspan="1">
+                                    <p:outputLabel style="font-weight: bold" value="Decisões"/>
+                                </p:column>
+                                <p:column colspan="2">
+                                    <h:inputText value="#{meditacaoMB.novaDecisao}" size="45" id="decis"/>
+                                    <p:watermark for="decis" value="Exemplos de decisões"/>
+                                </p:column>
+                                <p:column colspan="1">
+                                    <p:commandButton action="#{meditacaoMB.adicionarDecisao()}" value="Adicionar Decisão"/>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <p:row>
+                            <p:column colspan="4">
+                                <p:dataTable value="#{meditacaoMB.meditacao.decisoes}" var="decisao">
+                                    <p:column colspan="3">
+                                        <h:outputLabel value="#{decisao}"/>
+                                    </p:column>
+                                    <p:column colspan="1">
+                                        <p:commandButton icon="ui-icon-trash" title="Remover" action="#{meditacaoMB.removerDecisao(decisao)}"/>
+                                    </p:column>
+                                </p:dataTable>        
+                            </p:column>
+                        </p:row>
+
                     </p:panelGrid>
                     <br/>
                     <p:commandButton value="Voltar" onclick="history.go(-1)"/>
