@@ -1,0 +1,12 @@
+filters\AutorizacaoFilter.class
+org\itbparnamirim\kadosh6\beans\TurmaMB.class
+org\itbparnamirim\kadosh6\beans\MeditacaoMB.class
+org\itbparnamirim\kadosh6\beans\MembroMB.class
+org\itbparnamirim\kadosh6\beans\DisciplinaMB.class
+org\itbparnamirim\kadosh6\beans\LoginMB.class
+org\itbparnamirim\kadosh6\beans\MinisterioMB.class
+org\itbparnamirim\kadosh6\beans\ManagedBeanUtil.class
+org\itbparnamirim\kadosh6\beans\EventoMB.class
+org\itbparnamirim\kadosh6\beans\GrupoMB.class
+converters\MembroConverter.class
+org\itbparnamirim\kadosh6\beans\NoticiaMB.class
