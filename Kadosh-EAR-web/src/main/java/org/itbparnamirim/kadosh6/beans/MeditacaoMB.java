@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.SystemException;
@@ -30,7 +32,7 @@ public class MeditacaoMB implements Serializable{
     private String novoVersiculoDeApoio = "";
     private String novaDecisao = "";
     
-    @Inject MeditacaoDAO meditacaoDAO;
+    @EJB MeditacaoDAO meditacaoDAO;
     
     /**
      * Creates a new instance of MeditacaoMB
@@ -102,6 +104,11 @@ public class MeditacaoMB implements Serializable{
     
     public void carregarLista(){
         this.meditacoes = meditacaoDAO.list();
+    }
+    
+    public String meditar(Integer idMeditacao){
+        this.meditacao = meditacaoDAO.find(idMeditacao);
+        return "/pages/meditacao/inicioMeditacao.xhtml"+ManagedBeanUtil.REDIRECT;
     }
     
     public String prepararCadastro(){

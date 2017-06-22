@@ -17,8 +17,4 @@ import javax.transaction.UserTransaction;
 public class TemplateDAO {
     @PersistenceContext(unitName = "kadosh6PU")
     protected EntityManager em;
-    
-    //Ate agora nao precisamos usar esse objeto
-    @Resource
-    protected UserTransaction userTransaction;
 }

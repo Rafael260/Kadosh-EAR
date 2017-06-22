@@ -6,6 +6,7 @@
 package org.itbparnamirim.kadosh6.beans;
 
 import java.io.Serializable;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -27,7 +28,7 @@ public class LoginMB implements Serializable {
     private String usuario;
     private String senha;
 
-    @Inject
+    @EJB
     MembroDAO membroDAO;
 
     public LoginMB() {

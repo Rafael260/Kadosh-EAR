@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 //import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -26,10 +27,10 @@ public class MinisterioMB implements Serializable {
     private Membro membroSelecionado = new Membro();
     private List<Ministerio> ministerios = new ArrayList<>();
     
-    @Inject
+    @EJB
     MinisterioDAO ministerioDAO;
 
-    @Inject
+    @EJB
     MembroDAO membroDAO;
     
     public void carregarLista() {

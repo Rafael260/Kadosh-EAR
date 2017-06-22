@@ -22,14 +22,14 @@ public class DisciplinaDAO extends TemplateDAO{
     
     public Disciplina save(Disciplina disciplina) throws NotSupportedException {
         try {
-            userTransaction.begin();
+//            userTransaction.begin();
             if (disciplina.getId() == null) {
                 em.persist(disciplina);
             } else {
                 em.merge(disciplina);
             }
-            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException | HeuristicMixedException | HeuristicRollbackException | NotSupportedException | RollbackException | SystemException e) {
+//            userTransaction.commit();
+        } catch (IllegalStateException | SecurityException e) {
         }
         return disciplina;
     }
@@ -42,12 +42,12 @@ public class DisciplinaDAO extends TemplateDAO{
     
     public void delete(Disciplina disciplina) throws IllegalStateException, SecurityException, SystemException, Exception{
         try{
-            userTransaction.begin();
+//            userTransaction.begin();
             Disciplina d = em.find(Disciplina.class, disciplina.getId());
             em.remove(d);
-            userTransaction.commit();
+//            userTransaction.commit();
         }catch(Exception e){
-            userTransaction.rollback();
+//            userTransaction.rollback();
             throw new Exception("Houve um problema ao deletar a disciplina");
         }
     }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,7 +28,7 @@ public class EventoMB implements Serializable{
 
     private Evento evento = new Evento();
     private List<Evento> eventos = new ArrayList<>();
-    @Inject EventoDAO eventoDAO;
+    @EJB EventoDAO eventoDAO;
     /**
      * Creates a new instance of EventoMB
      */

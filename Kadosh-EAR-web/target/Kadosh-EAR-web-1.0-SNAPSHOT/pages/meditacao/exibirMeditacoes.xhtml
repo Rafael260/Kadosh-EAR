@@ -12,7 +12,7 @@
                 <f:viewAction action="#{meditacaoMB.carregarLista()}" />
             </f:metadata>
             <h:form>
-                <p:panel header="Ministérios Cadastrados" style="margin-bottom:20px;text-align:center" >
+                <p:panel header="Meditações Cadastradas" style="margin-bottom:20px;text-align:center" >
                     <p:dataTable value="#{meditacaoMB.meditacoes}" var="meditacao">
                         <p:column headerText="Título">
                             <h:outputText value="#{meditacao.titulo}"/>
@@ -24,7 +24,6 @@
                             <h:outputText value="#{meditacao.diaSemana}"/>
                         </p:column>
                         <p:column>
-                            <p:commandButton value="Meditar" /><br/>
                             <p:commandButton icon="ui-icon-search" action="#{meditacaoMB.prepararConsulta(meditacao)}">
                             </p:commandButton>
                             <p:commandButton icon="ui-icon-trash" title="Remover" actionListener="#{meditacaoMB.deletar(meditacao)}">
@@ -37,7 +36,9 @@
                             </p:confirmDialog>
                             
                             <p:commandButton icon="ui-icon-pencil" title="Editar" action="#{meditacaoMB.prepararEdicao(meditacao)}">
-                            </p:commandButton>
+                            </p:commandButton><br/>
+                            <p:commandButton value="Meditar" id="btnMeditar" action="#{meditacaoMB.meditar(meditacao.id)}"/>
+                            
                         </p:column>
                     </p:dataTable>
                 </p:panel>

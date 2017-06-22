@@ -8,6 +8,7 @@ package org.itbparnamirim.kadosh6.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 //import javax.enterprise.context.SessionScoped;
@@ -23,7 +24,7 @@ public class DisciplinaMB implements Serializable{
     
     private Disciplina disciplina = new Disciplina();
     private List<Disciplina> disciplinas = new ArrayList<>();
-    @Inject DisciplinaDAO disciplinaDAO;
+    @EJB DisciplinaDAO disciplinaDAO;
 //    private boolean cadastrando = true;
     
     public Disciplina getDisciplina() {

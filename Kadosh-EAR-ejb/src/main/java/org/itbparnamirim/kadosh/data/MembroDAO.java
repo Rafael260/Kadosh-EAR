@@ -22,23 +22,23 @@ import org.itbparnamirim.kadosh.model.Ministerio;
 public class MembroDAO extends TemplateDAO{
 
     public Membro save(Membro membro) throws NotSupportedException, SystemException, RollbackException, HeuristicMixedException, HeuristicRollbackException {
-        userTransaction.begin();
+//        userTransaction.begin();
         if (membro.getId() == null) {
             em.persist(membro);
         } else {
             em.merge(membro);
         }
-        userTransaction.commit();
+//        userTransaction.commit();
         return membro;
     }
     
     public Membro autenticar(String usuario, String senha){
-        try {
-            userTransaction.begin();
-        } catch (NotSupportedException | SystemException ex) {
-            Logger.getLogger(MembroDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+//        try {
+//            userTransaction.begin();
+//        } catch (NotSupportedException | SystemException ex) {
+//            Logger.getLogger(MembroDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            return null;
+//        }
         TypedQuery<Membro> query = em.createQuery("select m from Membro m where m.usuario=:usuario and m.senha=:senha", Membro.class);
         query.setParameter("usuario", usuario);
         query.setParameter("senha", senha);
@@ -48,12 +48,12 @@ public class MembroDAO extends TemplateDAO{
         }catch(javax.persistence.NoResultException e){
             System.out.println("Usuario/Senha inválidos");
         }
-        try {
-            userTransaction.commit();
-        } catch (RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException | SystemException ex) {
-            Logger.getLogger(MembroDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
+//        try {
+//            userTransaction.commit();
+//        } catch (RollbackException | HeuristicMixedException | HeuristicRollbackException | SecurityException | IllegalStateException | SystemException ex) {
+//            Logger.getLogger(MembroDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            return null;
+//        }
         return membro;
     }
 
@@ -64,13 +64,13 @@ public class MembroDAO extends TemplateDAO{
 
     public void delete(Membro membro) throws SystemException, Exception {
         try {
-            userTransaction.begin();
+//            userTransaction.begin();
             Membro m = em.find(Membro.class, membro.getId());
             em.remove(m);
-            userTransaction.commit();
+//            userTransaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            userTransaction.rollback();
+//            userTransaction.rollback();
             throw new Exception("Houve um erro ao deletar o membro");
         }
     }
