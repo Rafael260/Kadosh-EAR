@@ -13,11 +13,15 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.data.MeditacaoDAO;
+import org.itbparnamirim.kadosh.ejb.MeditacaoBean;
 import org.itbparnamirim.kadosh.model.Meditacao;
+import org.itbparnamirim.kadosh.model.Membro;
 
 /**
  *
@@ -25,15 +29,20 @@ import org.itbparnamirim.kadosh.model.Meditacao;
  */
 @Named
 @SessionScoped
-public class MeditacaoMB implements Serializable{
+public class MeditacaoMB implements Serializable {
 
     private Meditacao meditacao = new Meditacao();
     private List<Meditacao> meditacoes = new ArrayList<>();
     private String novoVersiculoDeApoio = "";
     private String novaDecisao = "";
-    
-    @EJB MeditacaoDAO meditacaoDAO;
-    
+
+    @Inject
+    LoginMB loginMB;
+    @EJB
+    MeditacaoBean meditacaoBean;
+    @EJB
+    MeditacaoDAO meditacaoDAO;
+
     /**
      * Creates a new instance of MeditacaoMB
      */
@@ -71,67 +80,62 @@ public class MeditacaoMB implements Serializable{
     public void setNovaDecisao(String novaDecisao) {
         this.novaDecisao = novaDecisao;
     }
-    
-    public String adicionarVersiculoDeApoio(){
+
+    public String adicionarVersiculoDeApoio() {
         this.meditacao.adicionarVersiculoDeApoio(novoVersiculoDeApoio);
         ManagedBeanUtil.refresh();
         return "";
     }
-    
-    public String removerVersiculoDeApoio(String versiculoDeApoio){
+
+    public String removerVersiculoDeApoio(String versiculoDeApoio) {
         this.meditacao.removerVersiculoDeApoio(versiculoDeApoio);
         ManagedBeanUtil.refresh();
         return "";
     }
-    
-    public String adicionarDecisao(){
+
+    public String adicionarDecisao() {
         this.meditacao.adicionarDecisao(novaDecisao);
         ManagedBeanUtil.refresh();
         return "";
     }
-    
-    public String removerDecisao(String decisao){
+
+    public String removerDecisao(String decisao) {
         this.meditacao.removerDecisao(decisao);
         ManagedBeanUtil.refresh();
         return "";
     }
-    
-    public void limparObjetos(){
+
+    public void limparObjetos() {
         meditacao = new Meditacao();
         novoVersiculoDeApoio = "";
         novaDecisao = "";
     }
-    
-    public void carregarLista(){
+
+    public void carregarLista() {
         this.meditacoes = meditacaoDAO.list();
     }
-    
-    public String meditar(Integer idMeditacao){
-        this.meditacao = meditacaoDAO.find(idMeditacao);
-        return "/pages/meditacao/inicioMeditacao.xhtml"+ManagedBeanUtil.REDIRECT;
-    }
-    
-    public String prepararCadastro(){
+
+    public String prepararCadastro() {
         limparObjetos();
-        return "/pages/meditacao/cadastroMeditacao.xhtml"+ManagedBeanUtil.REDIRECT;
+        return "/pages/meditacao/cadastroMeditacao.xhtml" + ManagedBeanUtil.REDIRECT;
     }
-    
-    public String prepararEdicao(Meditacao meditacao){
+
+    public String prepararEdicao(Meditacao meditacao) {
         this.meditacao = meditacao;
-        return "/pages/meditacao/cadastroMeditacao.xhtml"+ManagedBeanUtil.REDIRECT;
+        return "/pages/meditacao/cadastroMeditacao.xhtml" + ManagedBeanUtil.REDIRECT;
     }
-    
-    public String prepararConsulta(Meditacao meditacao){
+
+    public String prepararConsulta(Meditacao meditacao) {
         this.meditacao = meditacao;
-        return "/pages/meditacao/detalharMeditacao.xhtml"+ManagedBeanUtil.REDIRECT;
+        return "/pages/meditacao/detalharMeditacao.xhtml" + ManagedBeanUtil.REDIRECT;
     }
-    
-    public String salvar(){
+
+    public String salvar() {
         meditacaoDAO.save(meditacao);
-        return "/pages/meditacao/exibirMeditacoes.xhtml"+ManagedBeanUtil.REDIRECT;
+        return "/pages/meditacao/exibirMeditacoes.xhtml" + ManagedBeanUtil.REDIRECT;
     }
-    
-    public String deletar(Meditacao meditacao){
+
+    public String deletar(Meditacao meditacao) {
         try {
             meditacaoDAO.delete(meditacao);
         } catch (SecurityException ex) {
@@ -144,5 +148,17 @@ public class MeditacaoMB implements Serializable{
         ManagedBeanUtil.refresh();
         return "";
     }
-    
+
+    public String meditar(Integer idMeditacao) {
+        this.meditacao = meditacaoDAO.find(idMeditacao);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        meditacaoBean.iniciarMeditacao(meditacao, (Membro)session.getAttribute("usuarioLogado"));
+        return "/pages/meditacao/inicioMeditacao.xhtml" + ManagedBeanUtil.REDIRECT;
+    }
+
+    public String irDemonstracaoVersiculo() {
+        return "";
+    }
+
 }

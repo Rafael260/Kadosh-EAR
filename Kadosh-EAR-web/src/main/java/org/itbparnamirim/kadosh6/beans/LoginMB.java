@@ -13,6 +13,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import org.itbparnamirim.kadosh.data.MembroDAO;
 import org.itbparnamirim.kadosh.model.Membro;
 
@@ -61,6 +62,9 @@ public class LoginMB implements Serializable {
     public String entrar() {
         membroLogado = membroDAO.autenticar(usuario, senha);
         if (membroLogado != null) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            session.setAttribute("usuarioLogado", membroLogado);
             return "/pages/dashboardAdmin.xhtml" + ManagedBeanUtil.REDIRECT;
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
@@ -75,10 +79,10 @@ public class LoginMB implements Serializable {
     public String sair() {
         FacesContext.getCurrentInstance().getExternalContext()
                 .invalidateSession();
-        return "/login.xhtml"+ManagedBeanUtil.REDIRECT;
+        return "/login.xhtml" + ManagedBeanUtil.REDIRECT;
     }
-    
-    public boolean usuarioLogado(){
+
+    public boolean usuarioLogado() {
         return membroLogado != null;
     }
 }
