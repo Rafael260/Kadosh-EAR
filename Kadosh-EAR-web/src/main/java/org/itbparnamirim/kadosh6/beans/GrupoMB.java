@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 //import javax.enterprise.context.SessionScoped;
@@ -26,7 +27,7 @@ public class GrupoMB implements Serializable {
     private List<Grupo> grupos = new ArrayList<>();
     private boolean cadastrando = true;
     
-    @Inject
+    @EJB
     GrupoDAO grupoDAO;
 
     public void carregarLista() {

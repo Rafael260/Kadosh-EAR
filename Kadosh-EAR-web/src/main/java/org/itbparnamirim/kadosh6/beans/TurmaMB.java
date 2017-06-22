@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -28,7 +29,7 @@ public class TurmaMB implements Serializable{
 
     private Turma turma = new Turma();
     private List<Turma> turmas = new ArrayList<>();
-    @Inject TurmaDAO turmaDAO;
+    @EJB TurmaDAO turmaDAO;
     
     /**
      * Creates a new instance of TurmaMB

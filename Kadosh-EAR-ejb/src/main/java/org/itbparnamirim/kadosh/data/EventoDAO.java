@@ -20,14 +20,14 @@ public class EventoDAO extends TemplateDAO{
     //Eh importante usar o mesmo metodo para inserir e atualizar para conseguir aproveitar a tela de cadastro para fazer edicoes
     public Evento save(Evento evento) {
         try {
-            userTransaction.begin();
+//            userTransaction.begin();
             if (evento.getId() == null) {
                 em.persist(evento);
             } else {
                 em.merge(evento);
             }
-            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException | HeuristicMixedException | HeuristicRollbackException | NotSupportedException | RollbackException | SystemException e) {
+//            userTransaction.commit();
+        } catch (IllegalStateException | SecurityException e) {
             e.printStackTrace();
         }
         return evento;
@@ -44,12 +44,12 @@ public class EventoDAO extends TemplateDAO{
 
     public void delete(Evento evento) throws IllegalStateException, SecurityException, SystemException, Exception{
         try{
-            userTransaction.begin();
+//            userTransaction.begin();
             Evento ev = em.find(Evento.class, evento.getId());
             em.remove(ev);
-            userTransaction.commit();
+//            userTransaction.commit();
         }catch(Exception e){
-            userTransaction.rollback();
+//            userTransaction.rollback();
             throw new Exception("Houve um problema ao deletar o grupo");
         }
     }

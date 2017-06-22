@@ -21,14 +21,14 @@ public class NoticiaDAO extends TemplateDAO{
     //Eh importante usar o mesmo metodo para inserir e atualizar para conseguir aproveitar a tela de cadastro para fazer edicoes
     public Noticia save(Noticia noticia) {
         try {
-            userTransaction.begin();
+//            userTransaction.begin();
             if (noticia.getId() == null) {
                 em.persist(noticia);
             } else {
                 em.merge(noticia);
             }
-            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException | HeuristicMixedException | HeuristicRollbackException | NotSupportedException | RollbackException | SystemException e) {
+//            userTransaction.commit();
+        } catch (IllegalStateException | SecurityException e) {
             e.printStackTrace();
         }
         return noticia;
@@ -45,12 +45,12 @@ public class NoticiaDAO extends TemplateDAO{
 
     public void delete(Noticia noticia) throws IllegalStateException, SecurityException, SystemException, Exception{
         try{
-            userTransaction.begin();
+//            userTransaction.begin();
             Noticia not = em.find(Noticia.class, noticia.getId());
             em.remove(not);
-            userTransaction.commit();
+//            userTransaction.commit();
         }catch(Exception e){
-            userTransaction.rollback();
+//            userTransaction.rollback();
             throw new Exception("Houve um problema ao deletar a notícia");
         }
     }

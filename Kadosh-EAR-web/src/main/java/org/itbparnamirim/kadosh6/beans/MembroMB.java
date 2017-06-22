@@ -3,6 +3,7 @@ package org.itbparnamirim.kadosh6.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
@@ -26,10 +27,10 @@ import org.itbparnamirim.kadosh.model.Membro;
 @ManagedBean
 public class MembroMB implements Serializable {
 
-    @Inject
+    @EJB
     MembroDAO membroDAO;
     
-    @Inject
+    @EJB
     GrupoDAO grupoDAO;
     
     private Membro membro = new Membro();

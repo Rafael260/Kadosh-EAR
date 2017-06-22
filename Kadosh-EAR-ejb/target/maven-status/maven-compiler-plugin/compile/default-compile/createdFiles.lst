@@ -1,6 +1,7 @@
 org\itbparnamirim\kadosh\model\Ministerio.class
 org\itbparnamirim\kadosh\model\Matricula.class
 org\itbparnamirim\kadosh\data\EventoDAO.class
+org\itbparnamirim\kadosh\ejb\MeditacaoBeanLocal.class
 org\itbparnamirim\kadosh\data\DisciplinaDAO.class
 org\itbparnamirim\kadosh\model\Noticia.class
 org\itbparnamirim\kadosh\data\NoticiaDAO.class
@@ -12,6 +13,7 @@ org\itbparnamirim\kadosh\model\Evento_.class
 org\itbparnamirim\kadosh\model\Turma.class
 org\itbparnamirim\kadosh\model\Membro.class
 org\itbparnamirim\kadosh\model\Disciplina.class
+org\itbparnamirim\kadosh\ejb\MeditacaoBean.class
 org\itbparnamirim\kadosh\model\Ministerio_.class
 org\itbparnamirim\kadosh\data\MembroDAO.class
 org\itbparnamirim\kadosh\model\Meditacao.class

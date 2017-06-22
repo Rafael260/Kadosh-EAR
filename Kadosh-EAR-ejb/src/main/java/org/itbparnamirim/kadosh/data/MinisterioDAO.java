@@ -29,14 +29,14 @@ public class MinisterioDAO extends TemplateDAO{
 
     public Ministerio save(Ministerio ministerio) {
         try {
-            userTransaction.begin();
+//            userTransaction.begin();
             if (ministerio.getId() == null) {
                 em.persist(ministerio);
             } else {
                 em.merge(ministerio);
             }
-            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException | HeuristicMixedException | HeuristicRollbackException | NotSupportedException | RollbackException | SystemException e) {
+//            userTransaction.commit();
+        } catch (IllegalStateException | SecurityException e) {
             e.printStackTrace();
         }
         return ministerio;
@@ -53,16 +53,16 @@ public class MinisterioDAO extends TemplateDAO{
 
     public void delete(Ministerio ministerio) throws IllegalStateException, SecurityException, SystemException, Exception {
         try {
-            userTransaction.begin();
+//            userTransaction.begin();
             Ministerio min = em.find(Ministerio.class, ministerio.getId());
             List<Membro> membrosDoMinisterio = membroDAO.getMembrosDoMinisterio(ministerio);
             for (Membro membro : membrosDoMinisterio) {
                 membro.removerMinisterio(ministerio);
             }
             em.remove(min);
-            userTransaction.commit();
+//            userTransaction.commit();
         } catch (Exception e) {
-            userTransaction.rollback();
+//            userTransaction.rollback();
             throw new Exception ("Houve um problema ao deletar o ministério");
         }
     }

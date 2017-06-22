@@ -31,14 +31,14 @@ public class TurmaDAO extends TemplateDAO {
 
     public Turma save(Turma turma) {
         try {
-            userTransaction.begin();
+//            userTransaction.begin();
             if (turma.getId() == null) {
                 em.persist(turma);
             } else {
                 em.merge(turma);
             }
-            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException | HeuristicMixedException | HeuristicRollbackException | NotSupportedException | RollbackException | SystemException e) {
+//            userTransaction.commit();
+        } catch (IllegalStateException | SecurityException e) {
             e.printStackTrace();
         }
         return turma;
@@ -57,12 +57,12 @@ public class TurmaDAO extends TemplateDAO {
 
     public void delete(Turma turma) throws IllegalStateException, SecurityException, SystemException, Exception {
         try {
-            userTransaction.begin();
+//            userTransaction.begin();
             Turma t = em.find(Turma.class, turma.getId());
             em.remove(t);
-            userTransaction.commit();
+//            userTransaction.commit();
         } catch (Exception e) {
-            userTransaction.rollback();
+//            userTransaction.rollback();
             throw new Exception("Houve um problema ao deletar a turma");
         }
     }

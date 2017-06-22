@@ -22,14 +22,14 @@ public class MeditacaoDAO extends TemplateDAO{
     
     public Meditacao save(Meditacao meditacao){
         try {
-            userTransaction.begin();
+//            userTransaction.begin();
             if (meditacao.getId() == null) {
                 em.persist(meditacao);
             } else {
                 em.merge(meditacao);
             }
-            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException | HeuristicMixedException | HeuristicRollbackException | NotSupportedException | RollbackException | SystemException e) {
+//            userTransaction.commit();
+        } catch (IllegalStateException | SecurityException e) {
         }
         return meditacao;
     }
@@ -40,14 +40,18 @@ public class MeditacaoDAO extends TemplateDAO{
         return meditacoes;
     }
     
+    public Meditacao find(Integer id){
+        return em.find(Meditacao.class, id);
+    }
+    
     public void delete(Meditacao meditacao) throws IllegalStateException, SecurityException, SystemException, Exception{
         try{
-            userTransaction.begin();
+//            userTransaction.begin();
             Meditacao m = em.find(Meditacao.class, meditacao.getId());
             em.remove(m);
-            userTransaction.commit();
+//            userTransaction.commit();
         }catch(Exception e){
-            userTransaction.rollback();
+//            userTransaction.rollback();
             throw new Exception("Houve um problema ao deletar a meditacao");
         }
     }

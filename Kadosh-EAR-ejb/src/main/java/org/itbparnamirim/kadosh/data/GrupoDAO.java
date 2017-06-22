@@ -29,14 +29,14 @@ public class GrupoDAO extends TemplateDAO{
     //Eh importante usar o mesmo metodo para inserir e atualizar para conseguir aproveitar a tela de cadastro para fazer edicoes
     public Grupo save(Grupo grupo) {
         try {
-            userTransaction.begin();
+//            userTransaction.begin();
             if (grupo.getId() == null) {
                 em.persist(grupo);
             } else {
                 em.merge(grupo);
             }
-            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException | HeuristicMixedException | HeuristicRollbackException | NotSupportedException | RollbackException | SystemException e) {
+//            userTransaction.commit();
+        } catch (IllegalStateException | SecurityException e) {
             e.printStackTrace();
         }
         return grupo;
@@ -49,16 +49,16 @@ public class GrupoDAO extends TemplateDAO{
 
     public void delete(Grupo grupo) throws IllegalStateException, SecurityException, SystemException, Exception{
         try{
-            userTransaction.begin();
+//            userTransaction.begin();
             Grupo gr = em.find(Grupo.class, grupo.getId());
             List<Membro> membrosDoGrupo = membroDAO.getMembrosDoGrupo(gr);
             for (Membro m: membrosDoGrupo){
                 m.setGrupo(null);
             }
             em.remove(gr);
-            userTransaction.commit();
+//            userTransaction.commit();
         }catch(Exception e){
-            userTransaction.rollback();
+//            userTransaction.rollback();
             throw new Exception("Houve um problema ao deletar o grupo");
         }
     }
