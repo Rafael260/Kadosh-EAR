@@ -19,6 +19,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.data.MeditacaoDAO;
+import org.itbparnamirim.kadosh.ejb.MeditacaoBean;
 import org.itbparnamirim.kadosh.model.Meditacao;
 import org.itbparnamirim.kadosh.model.Membro;
 
@@ -37,6 +38,8 @@ public class MeditacaoMB implements Serializable {
 
     @Inject
     LoginMB loginMB;
+//    @EJB
+//    MeditacaoBean meditacaoBean;
     @EJB
     MeditacaoDAO meditacaoDAO;
 
@@ -80,6 +83,7 @@ public class MeditacaoMB implements Serializable {
 
     public String adicionarVersiculoDeApoio() {
         this.meditacao.adicionarVersiculoDeApoio(novoVersiculoDeApoio);
+        this.novoVersiculoDeApoio = "";
         ManagedBeanUtil.refresh();
         return "";
     }
@@ -92,6 +96,7 @@ public class MeditacaoMB implements Serializable {
 
     public String adicionarDecisao() {
         this.meditacao.adicionarDecisao(novaDecisao);
+        this.novaDecisao = "";
         ManagedBeanUtil.refresh();
         return "";
     }
@@ -148,8 +153,14 @@ public class MeditacaoMB implements Serializable {
 
     public String meditar(Integer idMeditacao) {
         this.meditacao = meditacaoDAO.find(idMeditacao);
-        HttpSession session = ManagedBeanUtil.getSession();
-        session.setAttribute("meditacao", meditacao);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+ //       meditacaoBean.iniciarMeditacao(meditacao, (Membro)session.getAttribute("usuarioLogado"));
         return "/pages/meditacao/inicioMeditacao.xhtml" + ManagedBeanUtil.REDIRECT;
     }
+
+    public String irDemonstracaoVersiculo() {
+        return "";
+    }
+
 }
