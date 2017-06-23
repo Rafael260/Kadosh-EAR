@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -26,5 +27,10 @@ public class ManagedBeanUtil {
         } catch (IOException ex) {
             Logger.getLogger(GrupoMB.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static HttpSession getSession(){
+        FacesContext fc = FacesContext.getCurrentInstance();
+        return (HttpSession) fc.getExternalContext().getSession(false);
     }
 }

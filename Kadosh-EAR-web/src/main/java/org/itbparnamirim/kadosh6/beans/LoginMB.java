@@ -62,8 +62,7 @@ public class LoginMB implements Serializable {
     public String entrar() {
         membroLogado = membroDAO.autenticar(usuario, senha);
         if (membroLogado != null) {
-            FacesContext fc = FacesContext.getCurrentInstance();
-            HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+            HttpSession session = ManagedBeanUtil.getSession();
             session.setAttribute("usuarioLogado", membroLogado);
             return "/pages/dashboardAdmin.xhtml" + ManagedBeanUtil.REDIRECT;
         } else {

@@ -17,7 +17,7 @@ import org.itbparnamirim.kadosh.model.Membro;
 public interface MeditacaoBeanLocal {
 
     void iniciarMeditacao(Meditacao meditacao, Membro membro);
-
-    void avancar();
+    boolean acertouVersiculo(String versiculo);
+    void finalizarMeditacao();
     
 }
