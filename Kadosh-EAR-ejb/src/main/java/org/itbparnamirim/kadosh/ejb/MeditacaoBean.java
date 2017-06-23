@@ -5,7 +5,9 @@
  */
 package org.itbparnamirim.kadosh.ejb;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
+import org.itbparnamirim.kadosh.data.MembroDAO;
 import org.itbparnamirim.kadosh.model.Meditacao;
 import org.itbparnamirim.kadosh.model.Membro;
 
@@ -18,14 +20,13 @@ public class MeditacaoBean implements MeditacaoBeanLocal {
 
     private Meditacao meditacao;
     private Membro membro;
-    private int passo;
-    private final static int NUM_PASSOS = 5;
+
+    @EJB MembroDAO membroDAO;
     
     @Override
     public void iniciarMeditacao(Meditacao meditacao, Membro membro) {
         this.meditacao = meditacao;
         this.membro = membro;
-        this.passo = 1;
     }
     
     //Metodo responsavel em colocar a string na forma normal para realizarmos a comparacao, 
@@ -34,6 +35,7 @@ public class MeditacaoBean implements MeditacaoBeanLocal {
         return versiculo.replace(",", "").replace(".", "").toLowerCase();
     }
     
+    @Override
     public boolean acertouVersiculo(String versiculoTentativa){
         String versiculo = getVersiculoFormaNormal(meditacao.getVersiculoBase());
         String versiculoTentativaFN = getVersiculoFormaNormal(versiculoTentativa);
@@ -41,8 +43,8 @@ public class MeditacaoBean implements MeditacaoBeanLocal {
     }
 
     @Override
-    public void avancar() {
-        passo++;
+    public void finalizarMeditacao() {
+        
     }
 
     

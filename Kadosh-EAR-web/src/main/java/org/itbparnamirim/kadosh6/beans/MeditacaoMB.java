@@ -38,8 +38,6 @@ public class MeditacaoMB implements Serializable {
 
     @Inject
     LoginMB loginMB;
-//    @EJB
-//    MeditacaoBean meditacaoBean;
     @EJB
     MeditacaoDAO meditacaoDAO;
 
@@ -155,7 +153,7 @@ public class MeditacaoMB implements Serializable {
         this.meditacao = meditacaoDAO.find(idMeditacao);
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
- //       meditacaoBean.iniciarMeditacao(meditacao, (Membro)session.getAttribute("usuarioLogado"));
+        session.setAttribute("meditacao", meditacao);
         return "/pages/meditacao/inicioMeditacao.xhtml" + ManagedBeanUtil.REDIRECT;
     }
 

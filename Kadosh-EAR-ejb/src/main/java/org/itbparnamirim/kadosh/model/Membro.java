@@ -47,9 +47,14 @@ public class Membro implements Serializable {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Turma> turmas;
+   
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private List<Meditacao> meditacoes;
     
     @OneToMany
     private List<Matricula> matriculas;
+    
+    
 
     public Membro() {
         nome = "";
@@ -66,6 +71,7 @@ public class Membro implements Serializable {
         administrador = false;
         ministerios = new ArrayList<>();
         turmas = new ArrayList<>();
+        meditacoes = new ArrayList<>();
     }
 
     public Membro(Integer id, String nome, String telefone, String email, Date dataNascimento, String usuario, String senha, Date dataBatismoApresentacao, Grupo grupo, List<Turma> turmas, Boolean lider, Boolean tesoureiro, Boolean professor, Boolean administrador, List<Ministerio> ministerios) {
@@ -223,6 +229,11 @@ public class Membro implements Serializable {
     public void removerMinisterio(Ministerio ministerio) {
         this.ministerios.remove(ministerio);
     }
+    
+    public void adicionarMeditacao(Meditacao meditacao){
+        this.meditacoes.add(meditacao);
+        
+    }
 
     @Override
     public boolean equals(Object outro) {
@@ -243,7 +254,7 @@ public class Membro implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
-
+    
     @Override
     public String toString() {
         return nome;
