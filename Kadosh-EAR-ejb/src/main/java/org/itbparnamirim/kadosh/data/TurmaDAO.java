@@ -3,18 +3,11 @@ package org.itbparnamirim.kadosh.data;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import org.apache.commons.lang3.StringUtils;
 import org.itbparnamirim.kadosh.model.Membro;
 import org.itbparnamirim.kadosh.model.Turma;
@@ -30,16 +23,10 @@ public class TurmaDAO extends TemplateDAO {
     }
 
     public Turma save(Turma turma) {
-        try {
-//            userTransaction.begin();
-            if (turma.getId() == null) {
-                em.persist(turma);
-            } else {
-                em.merge(turma);
-            }
-//            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException e) {
-            e.printStackTrace();
+        if (turma.getId() == null) {
+            em.persist(turma);
+        } else {
+            em.merge(turma);
         }
         return turma;
     }
@@ -55,16 +42,9 @@ public class TurmaDAO extends TemplateDAO {
         return turmas;
     }
 
-    public void delete(Turma turma) throws IllegalStateException, SecurityException, SystemException, Exception {
-        try {
-//            userTransaction.begin();
-            Turma t = em.find(Turma.class, turma.getId());
-            em.remove(t);
-//            userTransaction.commit();
-        } catch (Exception e) {
-//            userTransaction.rollback();
-            throw new Exception("Houve um problema ao deletar a turma");
-        }
+    public void delete(Turma turma) {
+        Turma t = em.find(Turma.class, turma.getId());
+        em.remove(t);
     }
 
     public List<Membro> buscarProfessorPorNome(String nome) {
@@ -82,12 +62,9 @@ public class TurmaDAO extends TemplateDAO {
             predicates.add(builder.like(membroRoot.<String>get("nome"),
                     "%" + nome.toLowerCase() + "%"));
         }
-
         criteriaQuery.select(membroRoot);
         criteriaQuery.where(predicates.toArray(new Predicate[0]));
-
         TypedQuery<Membro> query = em.createQuery(criteriaQuery);
-
         return query.getResultList();
     }
 

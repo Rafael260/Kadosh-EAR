@@ -7,10 +7,12 @@ package org.itbparnamirim.kadosh.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -41,9 +43,14 @@ public class Meditacao implements Serializable {
     
     private String diaSemana;
     
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private List<Membro> membros;
+    
     public Meditacao(){
         this.versiculosDeApoio = new ArrayList<>();
         this.decisoes = new ArrayList<>();
+        this.membros = new ArrayList<>();
     }
     
     public Integer getId() {
@@ -109,6 +116,14 @@ public class Meditacao implements Serializable {
     public void setDiaSemana(String diaSemana) {
         this.diaSemana = diaSemana;
     }
+
+    public List<Membro> getMembros() {
+        return membros;
+    }
+
+    public void setMembros(List<Membro> membros) {
+        this.membros = membros;
+    }
     
     public void adicionarVersiculoDeApoio(String versiculoDeApoio){
         this.versiculosDeApoio.add(versiculoDeApoio);
@@ -124,6 +139,14 @@ public class Meditacao implements Serializable {
     
     public void removerDecisao(String decisao){
         this.decisoes.remove(decisao);
+    }
+    
+    public void adicionarMembro(Membro membro){
+        this.membros.add(membro);
+    }
+    
+    public void removerMembro(Membro membro){
+        this.membros.remove(membro);
     }
     
     @Override

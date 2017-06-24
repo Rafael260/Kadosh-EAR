@@ -11,9 +11,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-//import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 import javax.transaction.NotSupportedException;
 import org.itbparnamirim.kadosh.data.DisciplinaDAO;
 import org.itbparnamirim.kadosh.model.Disciplina;
@@ -76,13 +73,11 @@ public class DisciplinaMB implements Serializable{
     
     public String prepararEdicao(Disciplina disciplina){
         this.disciplina = disciplina;
-//        this.cadastrando = false;
         return "/pages/disciplina/cadastroDisciplina.xhtml"+ManagedBeanUtil.REDIRECT;
     }
     
     public String prepararCadastro(){
         limparObjetos();
-//        this.cadastrando = true;
         return "/pages/disciplina/cadastroDisciplina.xhtml"+ManagedBeanUtil.REDIRECT;
     }
     

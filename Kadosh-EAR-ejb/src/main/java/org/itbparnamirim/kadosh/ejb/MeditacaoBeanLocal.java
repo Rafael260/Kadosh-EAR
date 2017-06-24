@@ -18,6 +18,7 @@ public interface MeditacaoBeanLocal {
 
     void iniciarMeditacao(Meditacao meditacao, Membro membro);
     boolean acertouVersiculo(String versiculo);
+    boolean versiculoDecorado();
     void finalizarMeditacao();
-    
+
 }

@@ -3,6 +3,7 @@
   <persistence-unit name="kadosh6PU" transaction-type="JTA">
     <jta-data-source>java:/kadosh</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+    </properties>
   </persistence-unit>
 </persistence>

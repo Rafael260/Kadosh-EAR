@@ -18,37 +18,25 @@ import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.model.Disciplina;
 
 @Stateless
-public class DisciplinaDAO extends TemplateDAO{
-    
+public class DisciplinaDAO extends TemplateDAO {
+
     public Disciplina save(Disciplina disciplina) throws NotSupportedException {
-        try {
-//            userTransaction.begin();
-            if (disciplina.getId() == null) {
-                em.persist(disciplina);
-            } else {
-                em.merge(disciplina);
-            }
-//            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException e) {
+        if (disciplina.getId() == null) {
+            em.persist(disciplina);
+        } else {
+            em.merge(disciplina);
         }
         return disciplina;
     }
-    
+
     public List<Disciplina> list() {
         TypedQuery<Disciplina> query = em.createNamedQuery("findAllDisciplinas", Disciplina.class);
         List<Disciplina> disciplinas = query.getResultList();
         return disciplinas;
     }
-    
-    public void delete(Disciplina disciplina) throws IllegalStateException, SecurityException, SystemException, Exception{
-        try{
-//            userTransaction.begin();
-            Disciplina d = em.find(Disciplina.class, disciplina.getId());
-            em.remove(d);
-//            userTransaction.commit();
-        }catch(Exception e){
-//            userTransaction.rollback();
-            throw new Exception("Houve um problema ao deletar a disciplina");
-        }
+
+    public void delete(Disciplina disciplina){
+        Disciplina d = em.find(Disciplina.class, disciplina.getId());
+        em.remove(d);
     }
 }

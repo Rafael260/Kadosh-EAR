@@ -8,8 +8,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 //import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
-import javax.inject.Inject;
 import org.itbparnamirim.kadosh.data.GrupoDAO;
 import org.itbparnamirim.kadosh.model.Grupo;
 import org.itbparnamirim.kadosh.model.Membro;

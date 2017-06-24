@@ -29,17 +29,17 @@ public class MembroMB implements Serializable {
 
     @EJB
     MembroDAO membroDAO;
-    
+
     @EJB
     GrupoDAO grupoDAO;
-    
+
     private Membro membro = new Membro();
     private List<Membro> membros = new ArrayList<>();
 
     public void carregarLista() {
         this.membros = membroDAO.list();
     }
-    
+
     public Membro getMembro() {
         return membro;
     }
@@ -58,24 +58,20 @@ public class MembroMB implements Serializable {
 
     public String salvar() {
         String paginaDestino = "/pages/membro/exibirMembros.xhtml";
-        try {
-            boolean cadastrando = membro.getId() == null;
-            membro = membroDAO.save(membro);
-            if (cadastrando){
-                membros.add(membro);
-            }
-        } catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException ex) {
-            paginaDestino = "/pages/dashboardAdmin.xhml";
+        boolean cadastrando = membro.getId() == null;
+        membro = membroDAO.save(membro);
+        if (cadastrando) {
+            membros.add(membro);
         }
         limparObjetos();
-        return paginaDestino+ManagedBeanUtil.REDIRECT;
+        return paginaDestino + ManagedBeanUtil.REDIRECT;
     }
 
     public String deletar(Membro membro) {
         String paginaDestino = "/pages/membro/exibirMembros.xhtml";
         try {
             Grupo grupo = membro.getGrupo();
-            if (grupo.getLider().equals(membro)){
+            if (grupo.getLider().equals(membro)) {
                 grupo.setLider(null);
                 grupoDAO.save(grupo);
             }
@@ -84,29 +80,29 @@ public class MembroMB implements Serializable {
         } catch (Exception ex) {
             paginaDestino = "/pages/dashboardAdmin.xhtml";
         }
-        return paginaDestino+ManagedBeanUtil.REDIRECT;
-    }
-    
-    public String prepararEdicao(Membro membro){
-        this.membro = membro;
-        return "/pages/membro/cadastroMembro.xhtml"+ManagedBeanUtil.REDIRECT;
-    }
-    
-    public String prepararConsulta(Membro membro){
-        this.membro = membro;
-        return "/pages/membro/detalharMembro.xhtml"+ManagedBeanUtil.REDIRECT;
+        return paginaDestino + ManagedBeanUtil.REDIRECT;
     }
 
-    private void limparObjetos(){
+    public String prepararEdicao(Membro membro) {
+        this.membro = membro;
+        return "/pages/membro/cadastroMembro.xhtml" + ManagedBeanUtil.REDIRECT;
+    }
+
+    public String prepararConsulta(Membro membro) {
+        this.membro = membro;
+        return "/pages/membro/detalharMembro.xhtml" + ManagedBeanUtil.REDIRECT;
+    }
+
+    private void limparObjetos() {
         this.membro = new Membro();
     }
-    
-    public String prepararCadastro(){
+
+    public String prepararCadastro() {
         limparObjetos();
-        return "/pages/membro/cadastroMembro.xhtml"+ManagedBeanUtil.REDIRECT;
+        return "/pages/membro/cadastroMembro.xhtml" + ManagedBeanUtil.REDIRECT;
     }
-    
-    public List<Membro> listarLideres(){
+
+    public List<Membro> listarLideres() {
         return membroDAO.membrosLideres();
     }
 }

@@ -82,10 +82,6 @@ public class NoticiaMB implements Serializable{
     public String deletar(Noticia noticia){
         try {
             noticiaDAO.delete(noticia);
-        } catch (SecurityException ex) {
-            Logger.getLogger(NoticiaMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SystemException ex) {
-            Logger.getLogger(NoticiaMB.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(NoticiaMB.class.getName()).log(Level.SEVERE, null, ex);
         }

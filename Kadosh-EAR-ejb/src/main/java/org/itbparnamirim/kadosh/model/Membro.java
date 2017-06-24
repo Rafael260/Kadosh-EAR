@@ -13,6 +13,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -48,7 +50,8 @@ public class Membro implements Serializable {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Turma> turmas;
    
-    @ManyToMany(cascade = CascadeType.PERSIST)
+//    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy="membros")
     private List<Meditacao> meditacoes;
     
     @OneToMany
@@ -72,24 +75,6 @@ public class Membro implements Serializable {
         ministerios = new ArrayList<>();
         turmas = new ArrayList<>();
         meditacoes = new ArrayList<>();
-    }
-
-    public Membro(Integer id, String nome, String telefone, String email, Date dataNascimento, String usuario, String senha, Date dataBatismoApresentacao, Grupo grupo, List<Turma> turmas, Boolean lider, Boolean tesoureiro, Boolean professor, Boolean administrador, List<Ministerio> ministerios) {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
-        this.dataNascimento = dataNascimento;
-        this.usuario = usuario;
-        this.senha = senha;
-        this.dataBatismoApresentacao = dataBatismoApresentacao;
-        this.grupo = grupo;
-        this.turmas = turmas;
-        this.lider = lider;
-        this.tesoureiro = tesoureiro;
-        this.professor = professor;
-        this.administrador = administrador;
-        this.ministerios = ministerios;
     }
 
     public Boolean getLider() {
@@ -219,9 +204,15 @@ public class Membro implements Serializable {
     public void setMatriculas(List<Matricula> matriculas) {
         this.matriculas = matriculas;
     }
-    
-    
 
+    public List<Meditacao> getMeditacoes() {
+        return meditacoes;
+    }
+
+    public void setMeditacoes(List<Meditacao> meditacoes) {
+        this.meditacoes = meditacoes;
+    }
+    
     public void adicionarMinisterio(Ministerio ministerio) {
         this.ministerios.add(ministerio);
     }
@@ -232,9 +223,18 @@ public class Membro implements Serializable {
     
     public void adicionarMeditacao(Meditacao meditacao){
         this.meditacoes.add(meditacao);
-        
+        meditacao.adicionarMembro(this);
     }
 
+    public void removerMeditacao(Meditacao meditacao){
+        this.meditacoes.remove(meditacao);
+        meditacao.removerMembro(this);
+    }
+    
+    public boolean naoMeditou(Meditacao meditacao){
+        return !this.meditacoes.contains(meditacao);
+    }
+    
     @Override
     public boolean equals(Object outro) {
         if (!(outro instanceof Membro)) {
