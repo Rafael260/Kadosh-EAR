@@ -141,4 +141,5 @@ public class MinisterioMB implements Serializable {
          ManagedBeanUtil.refresh();
         return "/pages/ministerio/detalharMinisterio.xhtml"+ManagedBeanUtil.REDIRECT;
     }
+    
 }

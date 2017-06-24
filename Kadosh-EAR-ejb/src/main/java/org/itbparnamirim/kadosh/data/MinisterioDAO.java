@@ -2,14 +2,8 @@ package org.itbparnamirim.kadosh.data;
 
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.TypedQuery;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.model.Membro;
 import org.itbparnamirim.kadosh.model.Ministerio;
@@ -29,13 +23,11 @@ public class MinisterioDAO extends TemplateDAO{
 
     public Ministerio save(Ministerio ministerio) {
         try {
-//            userTransaction.begin();
             if (ministerio.getId() == null) {
                 em.persist(ministerio);
             } else {
                 em.merge(ministerio);
             }
-//            userTransaction.commit();
         } catch (IllegalStateException | SecurityException e) {
             e.printStackTrace();
         }

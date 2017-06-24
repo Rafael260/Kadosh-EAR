@@ -13,8 +13,8 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.transaction.SystemException;
+import org.itbparnamirim.kadosh.data.MembroDAO;
 import org.itbparnamirim.kadosh.data.TurmaDAO;
 import org.itbparnamirim.kadosh.model.Membro;
 import org.itbparnamirim.kadosh.model.Turma;
@@ -25,12 +25,15 @@ import org.itbparnamirim.kadosh.model.Turma;
  */
 @Named
 @SessionScoped
-public class TurmaMB implements Serializable{
+public class TurmaMB implements Serializable {
 
     private Turma turma = new Turma();
     private List<Turma> turmas = new ArrayList<>();
-    @EJB TurmaDAO turmaDAO;
-    
+    @EJB
+    TurmaDAO turmaDAO;
+    @EJB
+    MembroDAO membroDAO;
+
     /**
      * Creates a new instance of TurmaMB
      */
@@ -52,32 +55,32 @@ public class TurmaMB implements Serializable{
     public void setTurmas(List<Turma> turmas) {
         this.turmas = turmas;
     }
-    
-    public void carregarLista(){
+
+    public void carregarLista() {
         this.turmas = turmaDAO.list();
     }
-    
-    public String prepararConsulta(Turma turma){
+
+    public String prepararConsulta(Turma turma) {
         this.turma = turma;
-        return "/pages/turma/detalharTurma.xhtml"+ManagedBeanUtil.REDIRECT;
+        return "/pages/turma/detalharTurma.xhtml" + ManagedBeanUtil.REDIRECT;
     }
-    
-    public String prepararEdicao(Integer id){
+
+    public String prepararEdicao(Integer id) {
         Turma turmaSelecionada = turmaDAO.find(id);
         this.turma = turmaSelecionada;
-        return "/pages/turma/cadastroTurma.xhtml"+ManagedBeanUtil.REDIRECT;
+        return "/pages/turma/cadastroTurma.xhtml" + ManagedBeanUtil.REDIRECT;
     }
-    
-    public String prepararCadastro(){
+
+    public String prepararCadastro() {
         limparObjetos();
-        return "/pages/turma/cadastroTurma.xhtml"+ManagedBeanUtil.REDIRECT;
+        return "/pages/turma/cadastroTurma.xhtml" + ManagedBeanUtil.REDIRECT;
     }
-    
-    public void limparObjetos(){
+
+    public void limparObjetos() {
         this.turma = new Turma();
     }
-    
-    public String deletar(Turma turma){
+
+    public String deletar(Turma turma) {
         try {
             turmaDAO.delete(turma);
         } catch (SecurityException ex) {
@@ -90,14 +93,22 @@ public class TurmaMB implements Serializable{
         ManagedBeanUtil.refresh();
         return "";
     }
-    
-    public String salvar(){
+
+    public String salvar() {
         turmaDAO.save(turma);
         limparObjetos();
-        return "/pages/turma/exibirTurmas.xhtml"+ManagedBeanUtil.REDIRECT;
+        return "/pages/turma/exibirTurmas.xhtml" + ManagedBeanUtil.REDIRECT;
     }
-    
-    public List<Membro> completarProfessor(String nome){
-        return turmaDAO.buscarProfessorPorNome(nome);
+
+    public List<Membro> completarProfessor(String nome) {
+        List<Membro> professores = new ArrayList<>();
+        //Carregar os membros que são professores
+        List<Membro> membrosProfessores = this.membroDAO.membrosProfessores();
+        for (Membro membro : membrosProfessores) {
+            if (membro.getNome().toLowerCase().startsWith(nome.toLowerCase())) {
+                professores.add(membro);
+            }
+        }
+        return professores;
     }
 }

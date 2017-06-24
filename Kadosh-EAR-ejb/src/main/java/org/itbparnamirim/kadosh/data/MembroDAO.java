@@ -121,5 +121,11 @@ public class MembroDAO extends TemplateDAO{
         query.setParameter("parametroLider", true);
         return query.getResultList();
     }
+    
+    public List<Membro> membrosProfessores(){
+        TypedQuery<Membro> query = em.createQuery("Select m from Membro m where m.professor = :paramProf", Membro.class);
+        query.setParameter("paramProf", true);
+        return query.getResultList();
+    }
 
 }

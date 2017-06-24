@@ -6,6 +6,10 @@
 package org.itbparnamirim.kadosh6.beans;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -14,6 +18,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.data.MembroDAO;
 import org.itbparnamirim.kadosh.model.Membro;
 
@@ -74,6 +83,7 @@ public class LoginMB implements Serializable {
             return null;
         }
     }
+        
 
     public String sair() {
         FacesContext.getCurrentInstance().getExternalContext()

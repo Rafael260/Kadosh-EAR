@@ -21,13 +21,15 @@
                             <f:selectItems value="#{disciplinaMB.disciplinas}" var="disc" itemValue="#{disc}" itemLabel="#{disc.toString()}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Professor"/>
-                        <p:autoComplete id="professor" value="#{turmaMB.turma.professores}"
+
+                        <p:autoComplete id="professor" value="#{turmaMB.turma.professor}"
                                         completeMethod="#{turmaMB.completarProfessor}" var="prof" itemLabel="#{prof.nome}"
-                                        itemValue="#{prof}" forceSelection="true" converter="omnifaces.SelectItemsConverter"/>
+                                        itemValue="#{prof}" forceSelection="true"  dropdown="true" converter="omnifaces.SelectItemsConverter"/>
+
                     </p:panelGrid>
                     <br/>
                     <p:commandButton value="Voltar" onclick="history.go(-1)"/>
-                    <p:commandButton value="Salvar" action="#{turmaMB.salvar}"/>
+                    <p:commandButton value="Salvar" action="#{turmaMB.salvar()}"/>
                 </p:panel>
             </h:form>
 

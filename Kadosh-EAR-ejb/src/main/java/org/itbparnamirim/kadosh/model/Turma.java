@@ -7,14 +7,13 @@ package org.itbparnamirim.kadosh.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Turma implements Serializable {
@@ -31,9 +30,8 @@ public class Turma implements Serializable {
     @OneToMany
     private List<Matricula> matriculas;
     
-    //Many to many pra que um mesmo membro esteja associado no banco com varias turmas.. pra pegar seu historico, e uma turma ter varios alunos eh trivial
-    @ManyToMany //(fetch = FetchType.EAGER, mappedBy="turmas", cascade=CascadeType.ALL)
-    private List<Membro> professores;
+    @OneToOne //(fetch = FetchType.EAGER, mappedBy="turmas", cascade=CascadeType.ALL)
+    private Membro professor;
 
 
     public List<Matricula> getMatriculas() {
@@ -43,18 +41,16 @@ public class Turma implements Serializable {
     public void setMatriculas(List<Matricula> matriculas) {
         this.matriculas = matriculas;
     }
-    
-    
 
     public Turma() {
     }
 
-    public Turma(Integer id, Disciplina disciplina, String anoLetivo, List<Matricula> matriculas, List<Membro> professores) {
+    public Turma(Integer id, Disciplina disciplina, String anoLetivo, List<Matricula> matriculas, Membro professor) {
         this.id = id;
         this.disciplina = disciplina;
         this.anoLetivo = anoLetivo;
         this.matriculas = matriculas;
-        this.professores = professores;
+        this.professor = professor;
     }
 
 
@@ -82,12 +78,16 @@ public class Turma implements Serializable {
         this.anoLetivo = anoLetivo;
     }
 
-    public List<Membro> getProfessores() {
-        return professores;
+    public void setProfessor(Membro professor) {
+        this.professor = professor;
+    }
+    
+    public Membro getProfessor() {
+        return professor;
     }
 
-    public void setAlunos(List<Membro> professores) {
-        this.professores = professores;
+    public void setAlunos(Membro professor) {
+        this.professor = professor;
     }
     
     @Override
