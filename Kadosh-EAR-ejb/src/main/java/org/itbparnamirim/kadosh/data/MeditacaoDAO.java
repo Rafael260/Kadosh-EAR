@@ -7,52 +7,41 @@ package org.itbparnamirim.kadosh.data;
 
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
 import javax.persistence.TypedQuery;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.model.Meditacao;
+import org.itbparnamirim.kadosh.model.Membro;
 
 @Stateless
-public class MeditacaoDAO extends TemplateDAO{
-    
-    public Meditacao save(Meditacao meditacao){
-        try {
-//            userTransaction.begin();
-            if (meditacao.getId() == null) {
-                em.persist(meditacao);
-            } else {
-                em.merge(meditacao);
-            }
-//            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException e) {
+public class MeditacaoDAO extends TemplateDAO {
+
+    public Meditacao save(Meditacao meditacao) {
+        if (meditacao.getId() == null) {
+            em.persist(meditacao);
+        } else {
+            em.merge(meditacao);
         }
         return meditacao;
     }
-    
+
     public List<Meditacao> list() {
         TypedQuery<Meditacao> query = em.createQuery("Select m from Meditacao m", Meditacao.class);
         List<Meditacao> meditacoes = query.getResultList();
         return meditacoes;
     }
-    
-    public Meditacao find(Integer id){
+
+    public Meditacao find(Integer id) {
         return em.find(Meditacao.class, id);
     }
+
+    public void delete(Meditacao meditacao) {
+        Meditacao m = em.find(Meditacao.class, meditacao.getId());
+        em.remove(m);
+    }
     
-    public void delete(Meditacao meditacao) throws IllegalStateException, SecurityException, SystemException, Exception{
-        try{
-//            userTransaction.begin();
-            Meditacao m = em.find(Meditacao.class, meditacao.getId());
-            em.remove(m);
-//            userTransaction.commit();
-        }catch(Exception e){
-//            userTransaction.rollback();
-            throw new Exception("Houve um problema ao deletar a meditacao");
-        }
+    public List<Membro> carregarMembrosDaMeditacao(Meditacao meditacao){
+        TypedQuery<Membro> query;
+        query = em.createQuery("select m from Membro m inner join m.meditacoes d where d = :meditacao", Membro.class);
+        query.setParameter("meditacao", meditacao);
+        return query.getResultList();
     }
 }

@@ -58,14 +58,10 @@ public class MembroMB implements Serializable {
 
     public String salvar() {
         String paginaDestino = "/pages/membro/exibirMembros.xhtml";
-        try {
-            boolean cadastrando = membro.getId() == null;
-            membro = membroDAO.save(membro);
-            if (cadastrando){
-                membros.add(membro);
-            }
-        } catch (NotSupportedException | SystemException | RollbackException | HeuristicMixedException | HeuristicRollbackException ex) {
-            paginaDestino = "/pages/dashboardAdmin.xhml";
+        boolean cadastrando = membro.getId() == null;
+        membro = membroDAO.save(membro);
+        if (cadastrando){
+            membros.add(membro);
         }
         limparObjetos();
         return paginaDestino+ManagedBeanUtil.REDIRECT;

@@ -5,13 +5,8 @@
  */
 package org.itbparnamirim.kadosh.data;
 
-import javax.annotation.Resource;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
 
 
 public class TemplateDAO {

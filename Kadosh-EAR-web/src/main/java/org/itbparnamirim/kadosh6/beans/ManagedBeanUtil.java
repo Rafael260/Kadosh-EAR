@@ -33,4 +33,12 @@ public class ManagedBeanUtil {
         FacesContext fc = FacesContext.getCurrentInstance();
         return (HttpSession) fc.getExternalContext().getSession(false);
     }
+    
+    public static void redirecionar(String caminho){
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(caminho);
+        } catch (IOException ex) {
+            Logger.getLogger(ManagedBeanUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

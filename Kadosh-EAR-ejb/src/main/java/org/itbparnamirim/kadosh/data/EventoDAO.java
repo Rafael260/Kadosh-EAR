@@ -1,34 +1,24 @@
 package org.itbparnamirim.kadosh.data;
+
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
 import javax.persistence.TypedQuery;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.model.Evento;
 
 @Stateless
-public class EventoDAO extends TemplateDAO{
+public class EventoDAO extends TemplateDAO {
 
     public EventoDAO() {
 
     }
+
     //Eh importante usar o mesmo metodo para inserir e atualizar para conseguir aproveitar a tela de cadastro para fazer edicoes
     public Evento save(Evento evento) {
-        try {
-//            userTransaction.begin();
-            if (evento.getId() == null) {
-                em.persist(evento);
-            } else {
-                em.merge(evento);
-            }
-//            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException e) {
-            e.printStackTrace();
+        if (evento.getId() == null) {
+            em.persist(evento);
+        } else {
+            em.merge(evento);
         }
         return evento;
     }
@@ -37,20 +27,13 @@ public class EventoDAO extends TemplateDAO{
         TypedQuery<Evento> query = em.createQuery("Select e from Evento e", Evento.class);
         return query.getResultList();
     }
-    
-    public Evento find(Integer id){
+
+    public Evento find(Integer id) {
         return em.find(Evento.class, id);
     }
 
-    public void delete(Evento evento) throws IllegalStateException, SecurityException, SystemException, Exception{
-        try{
-//            userTransaction.begin();
-            Evento ev = em.find(Evento.class, evento.getId());
-            em.remove(ev);
-//            userTransaction.commit();
-        }catch(Exception e){
-//            userTransaction.rollback();
-            throw new Exception("Houve um problema ao deletar o grupo");
-        }
+    public void delete(Evento evento){
+        Evento ev = em.find(Evento.class, evento.getId());
+        em.remove(ev);
     }
 }

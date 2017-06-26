@@ -16,7 +16,7 @@ import org.itbparnamirim.kadosh.model.Grupo;
 import org.itbparnamirim.kadosh.model.Membro;
 
 @Stateless
-public class GrupoDAO extends TemplateDAO{
+public class GrupoDAO extends TemplateDAO {
 
     //Posso fazer isso? eh para setar o grupo de cada membro como null na hora de deletar
     @Inject
@@ -28,16 +28,10 @@ public class GrupoDAO extends TemplateDAO{
 
     //Eh importante usar o mesmo metodo para inserir e atualizar para conseguir aproveitar a tela de cadastro para fazer edicoes
     public Grupo save(Grupo grupo) {
-        try {
-//            userTransaction.begin();
-            if (grupo.getId() == null) {
-                em.persist(grupo);
-            } else {
-                em.merge(grupo);
-            }
-//            userTransaction.commit();
-        } catch (IllegalStateException | SecurityException e) {
-            e.printStackTrace();
+        if (grupo.getId() == null) {
+            em.persist(grupo);
+        } else {
+            em.merge(grupo);
         }
         return grupo;
     }
@@ -47,19 +41,12 @@ public class GrupoDAO extends TemplateDAO{
         return query.getResultList();
     }
 
-    public void delete(Grupo grupo) throws IllegalStateException, SecurityException, SystemException, Exception{
-        try{
-//            userTransaction.begin();
-            Grupo gr = em.find(Grupo.class, grupo.getId());
-            List<Membro> membrosDoGrupo = membroDAO.getMembrosDoGrupo(gr);
-            for (Membro m: membrosDoGrupo){
-                m.setGrupo(null);
-            }
-            em.remove(gr);
-//            userTransaction.commit();
-        }catch(Exception e){
-//            userTransaction.rollback();
-            throw new Exception("Houve um problema ao deletar o grupo");
+    public void delete(Grupo grupo) {
+        Grupo gr = em.find(Grupo.class, grupo.getId());
+        List<Membro> membrosDoGrupo = membroDAO.getMembrosDoGrupo(gr);
+        for (Membro m : membrosDoGrupo) {
+            m.setGrupo(null);
         }
+        em.remove(gr);
     }
 }

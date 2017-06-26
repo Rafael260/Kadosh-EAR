@@ -74,6 +74,13 @@
 
                 <p:layoutUnit position="east" size="200"  header="Notícias" style="font-size: 15px" resizable="true" closable="false" collapsible="true">
                     <ui:insert name="leste"/>
+                    <p:dataTable id="ultimasNoticias" styleClass="borderless" value="#{noticiaMB.ultimasNoticias}" var="noticia">
+                        <p:column>
+                            <p:commandLink id="link" action="#{noticiaMB.abrirNoticia(noticia)}">
+                                <h:outputText value="#{noticia.manchete}" />
+                            </p:commandLink>
+                        </p:column> 
+                    </p:dataTable>
                 </p:layoutUnit>
 
                 <p:layoutUnit style="border-style: none" position="center">

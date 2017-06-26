@@ -19,6 +19,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.data.MeditacaoDAO;
+import org.itbparnamirim.kadosh.data.MembroDAO;
 import org.itbparnamirim.kadosh.ejb.MeditacaoBean;
 import org.itbparnamirim.kadosh.model.Meditacao;
 import org.itbparnamirim.kadosh.model.Membro;
@@ -36,10 +37,11 @@ public class MeditacaoMB implements Serializable {
     private String novoVersiculoDeApoio = "";
     private String novaDecisao = "";
 
-    @Inject
-    LoginMB loginMB;
     @EJB
     MeditacaoDAO meditacaoDAO;
+    
+    @EJB
+    MembroDAO membroDAO;
 
     /**
      * Creates a new instance of MeditacaoMB
@@ -138,10 +140,6 @@ public class MeditacaoMB implements Serializable {
     public String deletar(Meditacao meditacao) {
         try {
             meditacaoDAO.delete(meditacao);
-        } catch (SecurityException ex) {
-            Logger.getLogger(MeditacaoMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SystemException ex) {
-            Logger.getLogger(MeditacaoMB.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(MeditacaoMB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -151,14 +149,17 @@ public class MeditacaoMB implements Serializable {
 
     public String meditar(Integer idMeditacao) {
         this.meditacao = meditacaoDAO.find(idMeditacao);
-        FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        HttpSession session = ManagedBeanUtil.getSession();
         session.setAttribute("meditacao", meditacao);
         return "/pages/meditacao/inicioMeditacao.xhtml" + ManagedBeanUtil.REDIRECT;
     }
 
-    public String irDemonstracaoVersiculo() {
-        return "";
+    public boolean mostrarBotaoMeditacao(Meditacao meditacao){
+        HttpSession session = ManagedBeanUtil.getSession();
+        Membro membroLogado = (Membro) session.getAttribute("usuarioLogado");
+        meditacao.setMembros(meditacaoDAO.carregarMembrosDaMeditacao(meditacao));
+        membroLogado.setMeditacoes(membroDAO.getMeditacoesDoMembro(membroLogado));
+        return membroLogado.naoMeditou(meditacao);
     }
 
 }

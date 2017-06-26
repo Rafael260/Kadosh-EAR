@@ -19,6 +19,9 @@
                     <p:column headerText="Disciplina">
                         <h:outputText value="#{turma.disciplina}" />
                     </p:column>
+                    <p:column headerText="Professor">
+                        <h:outputText value="#{turma.professor}" />
+                    </p:column>
                     <p:column>
                         <p:commandButton icon="ui-icon-search" title="Consultar" action="#{turmaMB.prepararConsulta(turma)}">
                         </p:commandButton>

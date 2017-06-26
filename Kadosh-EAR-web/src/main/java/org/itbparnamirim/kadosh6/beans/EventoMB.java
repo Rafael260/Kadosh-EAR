@@ -80,15 +80,7 @@ public class EventoMB implements Serializable{
     }
     
     public String deletar(Evento evento){
-        try {
-            eventoDAO.delete(evento);
-        } catch (SecurityException ex) {
-            Logger.getLogger(EventoMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SystemException ex) {
-            Logger.getLogger(EventoMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(EventoMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        eventoDAO.delete(evento);
         ManagedBeanUtil.refresh();
         return "";
     }

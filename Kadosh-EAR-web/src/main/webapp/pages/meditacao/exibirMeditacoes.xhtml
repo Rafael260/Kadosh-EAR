@@ -37,7 +37,7 @@
                             
                             <p:commandButton icon="ui-icon-pencil" title="Editar" action="#{meditacaoMB.prepararEdicao(meditacao)}" style="font-size: 13px">
                             </p:commandButton>
-                            <p:commandButton value="Meditar" id="btnMeditar" action="#{meditacaoMB.meditar(meditacao.id)}" style="font-size: 13px"/>
+                            <p:commandButton value="Meditar" id="btnMeditar" rendered="#{meditacaoMB.mostrarBotaoMeditacao(meditacao)}" action="#{meditacaoMB.meditar(meditacao.id)}" style="font-size: 13px"/>
                             
                         </p:column>
                     </p:dataTable>

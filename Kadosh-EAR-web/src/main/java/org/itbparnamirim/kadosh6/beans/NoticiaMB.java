@@ -7,6 +7,7 @@ package org.itbparnamirim.kadosh6.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.data.NoticiaDAO;
+import org.itbparnamirim.kadosh.ejb.NoticiaBeanLocal;
 import org.itbparnamirim.kadosh.model.Noticia;
 
 /**
@@ -28,6 +30,7 @@ public class NoticiaMB implements Serializable{
 
     private Noticia noticia = new Noticia();
     private List<Noticia> noticias = new ArrayList<>();
+    @EJB NoticiaBeanLocal noticiaBean;
     @EJB NoticiaDAO noticiaDAO;
     /**
      * Creates a new instance of NoticiaMB
@@ -82,10 +85,6 @@ public class NoticiaMB implements Serializable{
     public String deletar(Noticia noticia){
         try {
             noticiaDAO.delete(noticia);
-        } catch (SecurityException ex) {
-            Logger.getLogger(NoticiaMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SystemException ex) {
-            Logger.getLogger(NoticiaMB.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(NoticiaMB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -101,4 +100,12 @@ public class NoticiaMB implements Serializable{
         noticiaDAO.carregarAtivas();
     }
     
+    public List<Noticia> getUltimasNoticias(){
+        return noticiaBean.getUltimasNoticias(noticias);
+    }
+    
+    public String abrirNoticia(Noticia noticia){
+        this.noticia = noticia;
+        return "/pages/noticia/detalharNoticia"+ManagedBeanUtil.REDIRECT;
+    }
 }

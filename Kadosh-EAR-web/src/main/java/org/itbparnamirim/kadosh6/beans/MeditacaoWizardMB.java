@@ -44,14 +44,14 @@ public class MeditacaoWizardMB implements Serializable {
         HttpSession session = ManagedBeanUtil.getSession();
         med = (Meditacao) session.getAttribute("meditacao");
         this.meditacao = med;
-        meditacaoBean.iniciarMeditacao(meditacao, (Membro) session.getAttribute("membroLogado"));
+        meditacaoBean.iniciarMeditacao(meditacao, (Membro) session.getAttribute("usuarioLogado"));
     }
 
     public void save() {
-        System.out.println("SALVANDO, AGORA DEVE MOSTRAR A MENSAGEM");
         FacesMessage message = new FacesMessage(FacesMessage.FACES_MESSAGES, "Parabéns por concluir a meditação!");
         message.setSummary("Parabéns!");
         RequestContext.getCurrentInstance().showMessageInDialog(message);
+        meditacaoBean.finalizarMeditacao();
     }
 
     public boolean isSkip() {
@@ -65,13 +65,12 @@ public class MeditacaoWizardMB implements Serializable {
     public String onFlowProcess(FlowEvent event) {
         String oldStep = event.getOldStep();
         String newStep = event.getNewStep();
-//        System.out.println("Passo atual: "+ oldStep);
-//        System.out.println("Passo novo: "+ newStep);
-        if (oldStep.equals("decorando") && newStep.equals("aprofundando")) {
+        if (oldStep.equals("decorando") && newStep.equals("aprofundando") && !meditacaoBean.versiculoDecorado()) {
             boolean acertouVersiculo = meditacaoBean.acertouVersiculo(versiculoTentativa);
             if (!acertouVersiculo) {
                 FacesMessage message = new FacesMessage(FacesMessage.FACES_MESSAGES, "O versículo não é esse.");
                 message.setSummary("Errou");
+                message.setSeverity(FacesMessage.SEVERITY_WARN);
                 RequestContext.getCurrentInstance().showMessageInDialog(message);
                 return oldStep;
             }
@@ -79,7 +78,6 @@ public class MeditacaoWizardMB implements Serializable {
             message.setSummary("Acertou!");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
         }
-
         return newStep;
     }
 }

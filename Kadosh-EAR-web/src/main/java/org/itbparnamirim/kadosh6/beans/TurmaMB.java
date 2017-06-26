@@ -81,15 +81,7 @@ public class TurmaMB implements Serializable {
     }
 
     public String deletar(Turma turma) {
-        try {
-            turmaDAO.delete(turma);
-        } catch (SecurityException ex) {
-            Logger.getLogger(TurmaMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SystemException ex) {
-            Logger.getLogger(TurmaMB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(TurmaMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        turmaDAO.delete(turma);
         ManagedBeanUtil.refresh();
         return "";
     }
