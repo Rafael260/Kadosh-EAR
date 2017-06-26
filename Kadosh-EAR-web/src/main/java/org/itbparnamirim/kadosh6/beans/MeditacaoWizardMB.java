@@ -70,6 +70,7 @@ public class MeditacaoWizardMB implements Serializable {
             if (!acertouVersiculo) {
                 FacesMessage message = new FacesMessage(FacesMessage.FACES_MESSAGES, "O versículo não é esse.");
                 message.setSummary("Errou");
+                message.setSeverity(FacesMessage.SEVERITY_WARN);
                 RequestContext.getCurrentInstance().showMessageInDialog(message);
                 return oldStep;
             }

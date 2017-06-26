@@ -70,6 +70,7 @@ public class LoginMB implements Serializable {
                     "Usuário/senha inválidos!");
             mensagem.setSeverity(FacesMessage.SEVERITY_ERROR);
             context.addMessage(null, mensagem);
+            senha = "";
             return null;
         }
     }
