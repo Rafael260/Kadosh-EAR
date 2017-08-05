@@ -8,4 +8,9 @@
         <converter-id>converter.MembroConverter</converter-id>
         <converter-class>converters.MembroConverter</converter-class>
     </converter>
+    <managed-bean>
+        <managed-bean-name>periodoLetivoMB</managed-bean-name>
+        <managed-bean-class>org.itbparnamirim.kadosh6.beans.PeriodoLetivoMB</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

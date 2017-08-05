@@ -24,14 +24,14 @@
         <Node id="pages/ministerio/detalharMinisterio.xhtml" x="400" y="600" zoom="true"/>
         <Node id="pages/noticia/exibirNoticias.xhtml" x="150" y="600" zoom="true"/>
         <Node id="pages/evento/exibirEventos.xhtml" x="400" y="450" zoom="true"/>
-        <Node id="login.xhtml" x="1400" y="300" zoom="true"/>
         <Node id="pages/meditacao/detalharMeditacao.xhtml" x="400" y="900" zoom="true"/>
-        <Node id="pages/turma/detalharTurma.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="login.xhtml" x="1400" y="300" zoom="true"/>
         <Node id="pages/noticia/cadastroNoticia.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="pages/turma/detalharTurma.xhtml" x="900" y="150" zoom="true"/>
         <Node id="pages/grupo/cadastroGrupo.xhtml" x="150" y="900" zoom="true"/>
         <Node id="pages/disciplina/exibirDisciplinas.xhtml" x="1150" y="450" zoom="true"/>
-        <Node id="pages/meditacao/exibirMeditacoes.xhtml" x="650" y="150" zoom="true"/>
         <Node id="pages/dashboardAdmin.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="pages/meditacao/exibirMeditacoes.xhtml" x="650" y="150" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>
