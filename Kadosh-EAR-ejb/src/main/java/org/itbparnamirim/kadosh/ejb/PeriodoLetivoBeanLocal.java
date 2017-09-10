@@ -5,9 +5,12 @@
  */
 package org.itbparnamirim.kadosh.ejb;
 
+import excecoes.DadosInvalidosException;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import org.itbparnamirim.kadosh.model.Disciplina;
+import org.itbparnamirim.kadosh.model.Membro;
 
 /**
  *
@@ -16,6 +19,7 @@ import org.itbparnamirim.kadosh.model.Disciplina;
 @Local
 public interface PeriodoLetivoBeanLocal {
 
-    List<Disciplina> getDisciplinasParaPeriodoLetivo(Integer qtdeDisciplinas);
+    void validarCampos(Date dataInicio, Date dataFim, Disciplina disciplina1, Membro professor1, Disciplina disciplina2, Membro professor2) throws DadosInvalidosException;
+
     
 }

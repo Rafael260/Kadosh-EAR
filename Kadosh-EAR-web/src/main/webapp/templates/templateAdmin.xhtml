@@ -16,7 +16,7 @@
         <h:body>
             <p:layout fullPage="true">
 
-                <p:layoutUnit position="north" size="100" resizable="false" closable="false" collapsible="true" >
+                <p:layoutUnit position="north" size="130" resizable="false" closable="false" collapsible="true" >
                     <p:panel header="Sistema Kadosh" style="font-size: 15px;border-style: none"></p:panel>
                     <!--                    <div class="ui-g">
                                             <div class="ui-g-12 ui-g-nopad">
@@ -25,7 +25,8 @@
                                                 <div class="ui-g-12" style="color: white;background-color: #191970">Igreja Tabernáculo Batista</div>
                                             </div>
                                         </div>-->
-                    <p:outputLabel value="Olá, #{loginMB.membroLogado.nome}!"/>
+                    <p:outputLabel value="Bem vindo, #{loginMB.membroLogado.nome}!"/> <br/>
+                    <p:commandButton value="Sair" action="#{loginMB.sair}"/>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="west" size="250" header="Menu Principal" style="font-size: 15px;border-style: none" resizable="true" closable="false" collapsible="true">
@@ -65,9 +66,6 @@
                             <p:submenu label="Meditação">
                                 <p:menuitem value="Cadastrar Meditação" action="#{meditacaoMB.prepararCadastro()}"/>
                                 <p:menuitem value="Listar Meditações" outcome="/pages/meditacao/exibirMeditacoes.xhtml" />
-                            </p:submenu>
-                            <p:submenu label="Sistema">
-                                <p:menuitem value="Sair" action="#{loginMB.sair}" />
                             </p:submenu>
                         </p:panelMenu>
                     </h:form>

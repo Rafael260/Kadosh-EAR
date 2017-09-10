@@ -2,18 +2,8 @@ package org.itbparnamirim.kadosh.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
 import javax.persistence.TypedQuery;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.model.Grupo;
 import org.itbparnamirim.kadosh.model.Meditacao;
 import org.itbparnamirim.kadosh.model.Membro;
@@ -64,18 +54,6 @@ public class MembroDAO extends TemplateDAO {
         return em.find(Membro.class, id);
     }
 
-    /**
-     * Talvez a situação não aconteça, pois para uma pessoa ser considerada
-     * Membro é preciso estar num grupo
-     *
-     * @return
-     */
-    public List<Membro> getMembrosSemGrupo() {
-        TypedQuery<Membro> query = em.createQuery("Select m from Membro m where m.grupo=:grupo", Membro.class);
-        query.setParameter("grupo", null);
-        return query.getResultList();
-    }
-
     public List<Membro> getMembrosDoMinisterio(Ministerio ministerio) {
         TypedQuery<Membro> query;
         query = em.createQuery("select m from Membro m inner join m.ministerios d where d = :ministerio", Membro.class);
@@ -113,5 +91,4 @@ public class MembroDAO extends TemplateDAO {
         query.setParameter("membro", membro);
         return query.getResultList();
     }
-
 }

@@ -6,14 +6,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.inject.Named;
-//import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.data.GrupoDAO;
 import org.itbparnamirim.kadosh.data.MembroDAO;
 import org.itbparnamirim.kadosh.model.Grupo;
@@ -104,5 +96,9 @@ public class MembroMB implements Serializable {
     
     public List<Membro> listarLideres(){
         return membroDAO.membrosLideres();
+    }
+    
+    public List<Membro> getProfessores(){
+        return membroDAO.membrosProfessores();
     }
 }

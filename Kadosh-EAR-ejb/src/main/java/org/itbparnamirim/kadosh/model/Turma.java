@@ -6,6 +6,7 @@
 package org.itbparnamirim.kadosh.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 @Entity
 public class Turma implements Serializable {
@@ -33,14 +35,11 @@ public class Turma implements Serializable {
     @OneToOne //(fetch = FetchType.EAGER, mappedBy="turmas", cascade=CascadeType.ALL)
     private Membro professor;
 
-
-    public List<Matricula> getMatriculas() {
-        return matriculas;
-    }
-
-    public void setMatriculas(List<Matricula> matriculas) {
-        this.matriculas = matriculas;
-    }
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataInicio;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataFim;
 
     public Turma() {
     }
@@ -90,9 +89,32 @@ public class Turma implements Serializable {
         this.professor = professor;
     }
     
+    public List<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(List<Matricula> matriculas) {
+        this.matriculas = matriculas;
+    }
+
+    public Date getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public Date getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
+    }
+    
     @Override
     public String toString(){
         return this.disciplina.toString() + " - " + this.anoLetivo;
     }
-    
 }
