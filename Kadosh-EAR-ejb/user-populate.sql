@@ -1,0 +1,26 @@
+INSERT INTO `kadosh`.`membro`
+(`administrador`,
+`dataBatismoApresentacao`,
+`dataNascimento`,
+`email`,
+`lider`,
+`nome`,
+`professor`,
+`senha`,
+`telefone`,
+`tesoureiro`,
+`usuario`,
+`grupo_id`)
+VALUES
+(false,
+'2010-10-10',
+'1995-10-18',
+'rafaom260@yahoo.com.br',
+false,
+'Rafael Oliveira',
+false,
+'12345678',
+'9',
+false,
+'Rafael260',
+null);

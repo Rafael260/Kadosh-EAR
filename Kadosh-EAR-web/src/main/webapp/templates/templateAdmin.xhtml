@@ -39,6 +39,10 @@
                                 <p:menuitem value="Cadastrar Membro" action="#{membroMB.prepararCadastro()}" />
                                 <p:menuitem value="Listar Membros" outcome="/pages/membro/exibirMembros.xhtml"/>
                             </p:submenu>
+                            <p:submenu label="Tipos de Grupo">
+                                <p:menuitem value="Cadastrar Tipo de Grupo" action="#{tipoGrupoMB.prepararCadastro()}"/>
+                                <p:menuitem value="Listar Tipos de Grupo" outcome="/pages/tipoGrupo/exibirTiposGrupo.xhtml"/>
+                            </p:submenu>
                             <p:submenu label="Grupos">
                                 <p:menuitem value="Cadastrar Grupo" action="#{grupoMB.prepararCadastro()}"/>
                                 <p:menuitem value="Listar Grupos" outcome="/pages/grupo/exibirGrupos.xhtml"/>
@@ -46,14 +50,6 @@
                             <p:submenu label="Ministério">
                                 <p:menuitem value="Cadastrar Ministério" action="#{ministerioMB.prepararCadastro()}"/>
                                 <p:menuitem value="Listar Ministérios" outcome="/pages/ministerio/exibirMinisterios.xhtml"/>
-                            </p:submenu>
-                            <p:submenu label="Seminário">
-                                <p:menuitem value="Cadastrar Disciplina" action="#{disciplinaMB.prepararCadastro()}"/>
-                                <p:menuitem value="Listar Disciplinas" outcome="/pages/disciplina/exibirDisciplinas.xhtml"/>
-                                <p:menuitem value="Cadastrar Turma" action="#{turmaMB.prepararCadastro()}" />
-                                <p:menuitem value="Listar Turmas" outcome="/pages/turma/exibirTurmas.xhtml"/>
-                                <p:menuitem value="Criar período letivo" outcome="/pages/turma/criarPeriodoLetivo.xhtml"/>
-
                             </p:submenu>
                             <p:submenu label="Eventos">
                                 <p:menuitem value="Cadastrar Evento" action="#{eventoMB.prepararCadastro()}" />
@@ -85,11 +81,8 @@
                 <p:layoutUnit style="border-style: none" position="center">
                     <ui:insert name="conteudo"/>
                 </p:layoutUnit>
-
             </p:layout>
-
         </h:body>
-
     </f:view>
 </html>
 

@@ -19,7 +19,6 @@ import javax.persistence.Entity;
         nullable = false, columnDefinition = "BIGINT UNSIGNED"))
 public class TipoGrupo extends AbstractModel implements Serializable {
  
-    
     @Column(unique=true)
     private String nomeTipo;
     

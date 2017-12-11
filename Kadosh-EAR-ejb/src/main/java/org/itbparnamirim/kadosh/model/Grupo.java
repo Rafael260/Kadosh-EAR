@@ -37,7 +37,8 @@ public class Grupo extends AbstractModel implements Serializable {
     @Temporal(TemporalType.TIME)
     private Date hora;
 
-    @OneToOne
+    @OneToOne(optional = true)
+    @JoinColumn(name = "lider_id")
     private Membro lider;
 
     //EAGER significa guloso, ou seja, ja ira carregar essa lista ao retornar o grupo

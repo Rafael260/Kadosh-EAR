@@ -5,10 +5,13 @@
  */
 package org.itbparnamirim.kadosh.model;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -25,6 +28,13 @@ public class Evento extends AbstractModel implements Serializable {
     private String localEvento;
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date diaHora;
+    
+    @ManyToMany(mappedBy="eventosRelacionados")
+    private List<Ministerio> ministeriosEnvolvidos;
+    
+    public Evento(){
+        ministeriosEnvolvidos = new ArrayList<>();
+    }
     
     public String getNome() {
         return nome;
@@ -48,6 +58,14 @@ public class Evento extends AbstractModel implements Serializable {
 
     public void setDiaHora(Date diaHora) {
         this.diaHora = diaHora;
+    }
+
+    public List<Ministerio> getMinisteriosEnvolvidos() {
+        return ministeriosEnvolvidos;
+    }
+
+    public void setMinisteriosEnvolvidos(List<Ministerio> ministeriosEnvolvidos) {
+        this.ministeriosEnvolvidos = ministeriosEnvolvidos;
     }
     
     @Override

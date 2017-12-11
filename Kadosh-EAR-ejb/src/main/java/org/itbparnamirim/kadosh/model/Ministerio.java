@@ -34,6 +34,9 @@ public class Ministerio extends AbstractModel implements Serializable {
     @JoinColumn(name = "lider_id")
     private Membro lider;
     
+    @ManyToMany
+    List<Evento> eventosRelacionados;
+    
     /**
      * Ministério possui uma lista de membros
      */
@@ -41,6 +44,7 @@ public class Ministerio extends AbstractModel implements Serializable {
     private List<Membro>membrosMinisterio = new ArrayList();
 
     public Ministerio() {
+        eventosRelacionados = new ArrayList<>();
     }
 
 
@@ -72,6 +76,14 @@ public class Ministerio extends AbstractModel implements Serializable {
         this.lider = lider;
     }
 
+    public List<Evento> getEventosRelacionados() {
+        return eventosRelacionados;
+    }
+
+    public void setEventosRelacionados(List<Evento> eventosRelacionados) {
+        this.eventosRelacionados = eventosRelacionados;
+    }
+    
     public List<Membro> getMembrosMinisterio() {
         return membrosMinisterio;
     }

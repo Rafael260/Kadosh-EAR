@@ -48,15 +48,9 @@ public class Membro extends AbstractModel implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Ministerio> ministerios;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    private List<Turma> turmas;
-   
 //    @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany(cascade = CascadeType.PERSIST, mappedBy="membros")
     private List<Meditacao> meditacoes;
-    
-    @OneToMany
-    private List<Matricula> matriculas;
     
     public Membro() {
         nome = "";
@@ -72,7 +66,6 @@ public class Membro extends AbstractModel implements Serializable {
         professor = false;
         administrador = false;
         ministerios = new ArrayList<>();
-        turmas = new ArrayList<>();
         meditacoes = new ArrayList<>();
     }
 
@@ -178,22 +171,6 @@ public class Membro extends AbstractModel implements Serializable {
 
     public void setMinisterios(List<Ministerio> ministerios) {
         this.ministerios = ministerios;
-    }
-
-    public List<Turma> getTurmas() {
-        return turmas;
-    }
-
-    public void setTurmas(List<Turma> turmas) {
-        this.turmas = turmas;
-    }
-
-    public List<Matricula> getMatriculas() {
-        return matriculas;
-    }
-
-    public void setMatriculas(List<Matricula> matriculas) {
-        this.matriculas = matriculas;
     }
 
     public List<Meditacao> getMeditacoes() {

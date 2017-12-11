@@ -8,15 +8,15 @@
 
     <ui:composition template="/templates/templateAdmin.xhtml">
         <ui:define name="conteudo">
+            <f:metadata>
+                <f:viewAction action="#{tipoGrupoMB.carregarLista()}" />
+            </f:metadata>
             <h:form style="font-size: 15px">
                 <p:panel header="Cadastro de Grupo" style="margin-bottom:20px;text-align:center" >
                     <p:panelGrid columns="4" style="border-style:none;margin-left: auto;margin-right: auto;text-align: left">
                         <p:outputLabel value="Tipo: "/>
-                        <p:selectOneMenu id="tipo" value="#{grupoMB.grupo.tipo}">
-                            <f:selectItem itemLabel="Selecione" itemValue="" />
-                            <f:selectItem itemLabel="Adolescentes" itemValue="Adolescentes" />
-                            <f:selectItem itemLabel="Casais" itemValue="Casais" />
-                            <f:selectItem itemLabel="Jovens" itemValue="Jovens" />
+                        <p:selectOneMenu id="tipo" value ="#{grupoMB.grupo.tipo}" converter="omnifaces.SelectItemsConverter" >
+                            <f:selectItems value="#{tipoGrupoMB.tiposGrupo}" var="tg" itemValue="#{tg}" itemLabel="#{tg.toString()}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Local: "/>
                         <p:inputText value="#{grupoMB.grupo.localReuniao}"/>
