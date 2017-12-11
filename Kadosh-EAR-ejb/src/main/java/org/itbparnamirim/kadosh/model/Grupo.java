@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -20,13 +22,15 @@ import javax.persistence.TemporalType;
  * @author geral_001
  */
 @Entity
+@AttributeOverride(name = "id", column = @Column(name = "id",  
+        nullable = false, columnDefinition = "BIGINT UNSIGNED"))
 @NamedQuery(name = "findAllGrupos", query = "SELECT g FROM Grupo g")
-public class Grupo implements Serializable {
+public class Grupo extends AbstractModel implements Serializable {
 
-    @GeneratedValue
-    @Id
-    private Integer id;
-    private String tipo;
+    @OneToOne
+    @JoinColumn(name = "tipo_grupo_id")
+    private TipoGrupo tipo;
+    
     private String localReuniao;
     private String diaSemana;
 
@@ -49,28 +53,11 @@ public class Grupo implements Serializable {
         lider = null;
     }
 
-    public Grupo(Integer id, String tipo, String local, String diaSemana, Date hora, Membro lider) {
-        this.id = id;
-        this.tipo = tipo;
-        this.localReuniao = local;
-        this.diaSemana = diaSemana;
-        this.hora = hora;
-        this.lider = lider;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTipo() {
+    public TipoGrupo getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoGrupo tipo) {
         this.tipo = tipo;
     }
 

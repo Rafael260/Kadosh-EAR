@@ -3,9 +3,9 @@ package org.itbparnamirim.kadosh.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 
@@ -14,12 +14,11 @@ import javax.persistence.Temporal;
  * @author Geraldo Jr
  */
 @Entity
+@AttributeOverride(name = "id", column = @Column(name = "id",  
+        nullable = false, columnDefinition = "BIGINT UNSIGNED"))
 @NamedQuery(name = "findAllNoticias", query = "SELECT n FROM Noticia n")
-public class Noticia implements Serializable {
+public class Noticia extends AbstractModel implements Serializable {
     
-    @GeneratedValue
-    @Id
-    private Integer id;
     private String manchete;
     private String textoDaNoticia;
     
@@ -28,25 +27,9 @@ public class Noticia implements Serializable {
     
     private String destinatario;
 
-    public Noticia(Integer id, String manchete, String textoDaNoticia, Date validade, String destinatario) {
-        this.id = id;
-        this.manchete = manchete;
-        this.textoDaNoticia = textoDaNoticia;
-        this.validade = validade;
-        this.destinatario = destinatario;
-    }
-
     public Noticia() {
     }
     
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getManchete() {
         return manchete;
     }

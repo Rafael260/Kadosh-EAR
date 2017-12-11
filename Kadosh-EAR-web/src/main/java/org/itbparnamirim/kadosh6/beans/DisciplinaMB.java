@@ -11,10 +11,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-//import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.transaction.NotSupportedException;
 import org.itbparnamirim.kadosh.data.DisciplinaDAO;
 import org.itbparnamirim.kadosh.model.Disciplina;
 
@@ -46,9 +42,9 @@ public class DisciplinaMB implements Serializable{
     public String salvar(){
         String paginaDestino = "/pages/disciplina/exibirDisciplinas.xhtml";
         try {
-            disciplina = disciplinaDAO.save(disciplina);
+            disciplina = disciplinaDAO.salvar(disciplina);
             limparObjetos();
-        } catch (NotSupportedException ex) {
+        } catch (Exception ex) {
             paginaDestino = "/pages/disciplina/dashboardAdmin.xhml";
         }
         return paginaDestino+ManagedBeanUtil.REDIRECT;
@@ -57,7 +53,7 @@ public class DisciplinaMB implements Serializable{
     public String deletar(Disciplina disciplina) {
         String paginaDestino = "/pages/disciplina/exibirDisciplinas.xhtml";
         try {
-            disciplinaDAO.delete(disciplina);
+            disciplinaDAO.remover(disciplina);
             ManagedBeanUtil.refresh();
         } catch (Exception ex) {
             paginaDestino = "/pages/dashboardAdmin.xhtml";
@@ -66,7 +62,7 @@ public class DisciplinaMB implements Serializable{
     }
     
     public void carregarLista(){
-        disciplinas = disciplinaDAO.list();
+        disciplinas = disciplinaDAO.listar();
     }
     
     public String prepararConsulta(Disciplina disciplina){

@@ -6,12 +6,17 @@
 package org.itbparnamirim.kadosh.data;
 
 import javax.ejb.Stateless;
-import org.itbparnamirim.kadosh.model.Disciplina;
+import org.itbparnamirim.kadosh.model.TipoGrupo;
 
+/**
+ *
+ * @author rafao
+ */
 @Stateless
-public class DisciplinaDAO extends AbstractDAO<Disciplina>{
+public class TipoGrupoDAO extends AbstractDAO<TipoGrupo>{
     
-    public DisciplinaDAO(){
-        super(Disciplina.class);
+    public TipoGrupoDAO(){
+        super(TipoGrupo.class);
     }
+    
 }

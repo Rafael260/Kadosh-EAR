@@ -29,7 +29,7 @@ public class MembroMB implements Serializable {
     private List<Membro> membros = new ArrayList<>();
 
     public void carregarLista() {
-        this.membros = membroDAO.list();
+        this.membros = membroDAO.listar();
     }
     
     public Membro getMembro() {
@@ -51,7 +51,7 @@ public class MembroMB implements Serializable {
     public String salvar() {
         String paginaDestino = "/pages/membro/exibirMembros.xhtml";
         boolean cadastrando = membro.getId() == null;
-        membro = membroDAO.save(membro);
+        membro = membroDAO.salvar(membro);
         if (cadastrando){
             membros.add(membro);
         }
@@ -65,9 +65,9 @@ public class MembroMB implements Serializable {
             Grupo grupo = membro.getGrupo();
             if (grupo.getLider().equals(membro)){
                 grupo.setLider(null);
-                grupoDAO.save(grupo);
+                grupoDAO.salvar(grupo);
             }
-            membroDAO.delete(membro);
+            membroDAO.remover(membro);
             ManagedBeanUtil.refresh();
         } catch (Exception ex) {
             paginaDestino = "/pages/dashboardAdmin.xhtml";

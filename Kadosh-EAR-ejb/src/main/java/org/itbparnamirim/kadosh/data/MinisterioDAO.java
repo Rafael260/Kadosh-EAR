@@ -12,24 +12,17 @@ import org.itbparnamirim.kadosh.model.Ministerio;
  * @author Geraldo
  */
 @Stateless
-public class MinisterioDAO extends TemplateDAO {
+public class MinisterioDAO extends AbstractDAO<Ministerio> {
 
     @Inject
     MembroDAO membroDAO;
 
     public MinisterioDAO() {
+        super(Ministerio.class);
     }
 
-    public Ministerio save(Ministerio ministerio) {
-        if (ministerio.getId() == null) {
-            em.persist(ministerio);
-        } else {
-            em.merge(ministerio);
-        }
-        return ministerio;
-    }
-
-    public List<Ministerio> list() {
+    @Override
+    public List<Ministerio> listar() {
         TypedQuery<Ministerio> query = em.createNamedQuery("findAllMinisterios", Ministerio.class);
         List<Ministerio> ministerios = query.getResultList();
         for (Ministerio ministerio : ministerios) {
@@ -38,7 +31,8 @@ public class MinisterioDAO extends TemplateDAO {
         return ministerios;
     }
 
-    public void delete(Ministerio ministerio) {
+    @Override
+    public void remover(Ministerio ministerio) {
         Ministerio min = em.find(Ministerio.class, ministerio.getId());
         List<Membro> membrosDoMinisterio = membroDAO.getMembrosDoMinisterio(ministerio);
         for (Membro membro : membrosDoMinisterio) {

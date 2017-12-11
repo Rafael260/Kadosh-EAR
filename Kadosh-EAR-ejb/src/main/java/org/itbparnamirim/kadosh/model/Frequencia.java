@@ -2,9 +2,10 @@ package org.itbparnamirim.kadosh.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -14,26 +15,18 @@ import javax.persistence.TemporalType;
  * @author Geraldo Jr
  */
 @Entity
-public class Frequencia implements Serializable{
+@AttributeOverride(name = "id", column = @Column(name = "id",  
+        nullable = false, columnDefinition = "BIGINT UNSIGNED"))
+public class Frequencia extends AbstractModel implements Serializable{
     
-    @Id
-    @GeneratedValue
-    private int id;
     @Temporal(TemporalType.DATE)
     private Date dataAula;
     private boolean presenca;
     
     @ManyToOne
+    @JoinColumn(name = "matricula_id")
     private Matricula matricula;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-    
     public Date getData() {
         return dataAula;
     }

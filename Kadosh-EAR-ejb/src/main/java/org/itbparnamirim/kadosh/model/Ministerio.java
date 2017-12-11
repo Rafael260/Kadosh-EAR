@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
@@ -19,14 +22,16 @@ import javax.persistence.NamedQuery;
  * @author Geraldo
  */
 @Entity
+@AttributeOverride(name = "id", column = @Column(name = "id",  
+        nullable = false, columnDefinition = "BIGINT UNSIGNED"))
 @NamedQuery(name = "findAllMinisterios", query = "SELECT m FROM Ministerio m")
-public class Ministerio implements Serializable {
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class Ministerio extends AbstractModel implements Serializable {
+
     private String nome;
     private String descricao;
+    
     @ManyToOne
+    @JoinColumn(name = "lider_id")
     private Membro lider;
     
     /**
@@ -38,25 +43,11 @@ public class Ministerio implements Serializable {
     public Ministerio() {
     }
 
-    public Ministerio(Integer id, String nome, String descricao, Membro lider) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.lider = lider;
-    }
 
     public void setMembrosDoMinisterio (List<Membro> membros){
         this.membrosMinisterio = membros;
     }
     
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }

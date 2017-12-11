@@ -7,34 +7,10 @@ import javax.persistence.TypedQuery;
 import org.itbparnamirim.kadosh.model.Noticia;
 
 @Stateless
-public class NoticiaDAO extends TemplateDAO {
+public class NoticiaDAO extends AbstractDAO<Noticia> {
 
     public NoticiaDAO() {
-
-    }
-
-    //Eh importante usar o mesmo metodo para inserir e atualizar para conseguir aproveitar a tela de cadastro para fazer edicoes
-    public Noticia save(Noticia noticia) {
-        if (noticia.getId() == null) {
-            em.persist(noticia);
-        } else {
-            em.merge(noticia);
-        }
-        return noticia;
-    }
-
-    public List<Noticia> list() {
-        TypedQuery<Noticia> query = em.createNamedQuery("findAllNoticias", Noticia.class);
-        return query.getResultList();
-    }
-
-    public Noticia find(Integer id) {
-        return em.find(Noticia.class, id);
-    }
-
-    public void delete(Noticia noticia){
-        Noticia not = em.find(Noticia.class, noticia.getId());
-        em.remove(not);
+        super(Noticia.class);
     }
 
     public List<Noticia> carregarAtivas() {

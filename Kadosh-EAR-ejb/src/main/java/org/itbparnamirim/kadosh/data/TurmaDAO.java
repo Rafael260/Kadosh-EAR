@@ -17,34 +17,10 @@ import org.itbparnamirim.kadosh.model.Turma;
  * @author Geraldo
  */
 @Stateless
-public class TurmaDAO extends TemplateDAO {
+public class TurmaDAO extends AbstractDAO<Turma> {
 
     public TurmaDAO() {
-    }
-
-    public Turma save(Turma turma) {
-        if (turma.getId() == null) {
-            em.persist(turma);
-        } else {
-            em.merge(turma);
-        }
-        return turma;
-    }
-
-    public Turma find(Integer id) {
-        Turma turma = em.find(Turma.class, id);
-        return turma;
-    }
-
-    public List<Turma> list() {
-        TypedQuery<Turma> query = em.createQuery("select t from Turma t", Turma.class);
-        List<Turma> turmas = query.getResultList();
-        return turmas;
-    }
-
-    public void delete(Turma turma) {
-        Turma t = em.find(Turma.class, turma.getId());
-        em.remove(t);
+        super(Turma.class);
     }
 
     public List<Membro> buscarProfessorPorNome(String nome) {

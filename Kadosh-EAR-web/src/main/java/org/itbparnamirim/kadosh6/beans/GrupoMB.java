@@ -8,8 +8,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 //import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
-import javax.inject.Inject;
 import org.itbparnamirim.kadosh.data.GrupoDAO;
 import org.itbparnamirim.kadosh.model.Grupo;
 import org.itbparnamirim.kadosh.model.Membro;
@@ -31,7 +29,7 @@ public class GrupoMB implements Serializable {
     GrupoDAO grupoDAO;
 
     public void carregarLista() {
-        this.grupos = grupoDAO.list();
+        this.grupos = grupoDAO.listar();
     }
 
     public List<Grupo> getGrupos() {
@@ -59,7 +57,7 @@ public class GrupoMB implements Serializable {
     }
 
     public String salvar() {
-        grupo = grupoDAO.save(grupo);
+        grupo = grupoDAO.salvar(grupo);
         limparObjetos();
         return "/pages/grupo/exibirGrupos.xhtml"+ManagedBeanUtil.REDIRECT;
     }
@@ -71,7 +69,7 @@ public class GrupoMB implements Serializable {
     public String deletar(Grupo grupo) {
         String paginaDestino = "/pages/grupo/exibirGrupos.xhtml";
         try {
-            grupoDAO.delete(grupo);
+            grupoDAO.remover(grupo);
             ManagedBeanUtil.refresh();
         } catch (Exception ex) {
             paginaDestino = "dashboardAdmin";

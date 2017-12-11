@@ -3,11 +3,9 @@ package org.itbparnamirim.kadosh6.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 //import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import org.itbparnamirim.kadosh.data.MembroDAO;
 import org.itbparnamirim.kadosh.data.MinisterioDAO;
@@ -34,7 +32,7 @@ public class MinisterioMB implements Serializable {
     MembroDAO membroDAO;
     
     public void carregarLista() {
-        this.ministerios = ministerioDAO.list();
+        this.ministerios = ministerioDAO.listar();
     }
 
     public Ministerio getMinisterio() {
@@ -70,7 +68,7 @@ public class MinisterioMB implements Serializable {
     }
     
     public String salvar(){
-        ministerio = ministerioDAO.save(ministerio);
+        ministerio = ministerioDAO.salvar(ministerio);
         limparMinisterio();
         return "/pages/ministerio/exibirMinisterios.xhtml"+ManagedBeanUtil.REDIRECT;
     }
@@ -82,7 +80,7 @@ public class MinisterioMB implements Serializable {
     public String deletar(Ministerio ministerio) {
         String paginaDestino = "/pages/ministerio/exibirMinisterios.xhtml";
         try {
-            ministerioDAO.delete(ministerio);
+            ministerioDAO.remover(ministerio);
             ManagedBeanUtil.refresh();
         } catch (Exception e) {
             paginaDestino = "/pages/dashboardAdmin.xhtml";
@@ -129,7 +127,7 @@ public class MinisterioMB implements Serializable {
     
     public String adicionarMembro(){
         this.ministerio.adicionarMembro(membroSelecionado);
-        ministerioDAO.save(ministerio);
+        ministerioDAO.salvar(ministerio);
         ManagedBeanUtil.refresh();
         membroSelecionado = null;
         return "/pages/ministerio/detalharMinisterio.xhtml"+ManagedBeanUtil.REDIRECT;
@@ -137,7 +135,7 @@ public class MinisterioMB implements Serializable {
     
     public String removerMembro(Membro membro){
         this.ministerio.removerMembro(membro);
-        ministerioDAO.save(ministerio);
+        ministerioDAO.salvar(ministerio);
          ManagedBeanUtil.refresh();
         return "/pages/ministerio/detalharMinisterio.xhtml"+ManagedBeanUtil.REDIRECT;
     }

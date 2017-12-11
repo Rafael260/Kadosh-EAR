@@ -9,19 +9,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
+@AttributeOverride(name = "id", column = @Column(name = "id",  
+        nullable = false, columnDefinition = "BIGINT UNSIGNED"))
 @NamedQuery(name = "findAllDisciplinas", query = "SELECT d FROM Disciplina d")
-public class Disciplina implements Serializable {
+public class Disciplina extends AbstractModel implements Serializable {
     
-    @GeneratedValue
-    @Id
-    private Integer id;
     private String nome;
     private String sigla;
     private String ciclo;
@@ -31,22 +30,6 @@ public class Disciplina implements Serializable {
 
     public Disciplina() {
         turmas = new ArrayList<>();
-    }
-
-    public Disciplina(Integer id, String nome, String sigla, String ciclo, List<Turma> turmas) {
-        this.id = id;
-        this.nome = nome;
-        this.sigla = sigla;
-        this.ciclo = ciclo;
-        this.turmas = turmas;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNome() {

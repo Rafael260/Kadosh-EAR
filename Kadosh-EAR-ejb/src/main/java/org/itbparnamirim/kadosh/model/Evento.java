@@ -5,12 +5,10 @@
  */
 package org.itbparnamirim.kadosh.model;
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,24 +17,15 @@ import javax.persistence.TemporalType;
  * @author rafao
  */
 @Entity
-public class Evento implements Serializable {
+@AttributeOverride(name = "id", column = @Column(name = "id",  
+        nullable = false, columnDefinition = "BIGINT UNSIGNED"))
+public class Evento extends AbstractModel implements Serializable {
 
-    @Id
-    @GeneratedValue
-    private Integer id;
     private String nome;
     private String localEvento;
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date diaHora;
     
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }

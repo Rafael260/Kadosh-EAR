@@ -10,17 +10,12 @@ import org.itbparnamirim.kadosh.model.Membro;
 import org.itbparnamirim.kadosh.model.Ministerio;
 
 @Stateless
-public class MembroDAO extends TemplateDAO {
+public class MembroDAO extends AbstractDAO<Membro> {
 
-    public Membro save(Membro membro) {
-        if (membro.getId() == null) {
-            em.persist(membro);
-        } else {
-            em.merge(membro);
-        }
-        return membro;
+    public MembroDAO(){
+        super(Membro.class);
     }
-
+    
     public Membro autenticar(String usuario, String senha) {
         TypedQuery<Membro> query = em.createQuery("select m from Membro m where m.usuario=:usuario and m.senha=:senha", Membro.class);
         query.setParameter("usuario", usuario);
@@ -34,24 +29,10 @@ public class MembroDAO extends TemplateDAO {
         return membro;
     }
 
-    public List<Membro> list() {
-        TypedQuery<Membro> query = em.createQuery("select m from Membro m", Membro.class);
-        return query.getResultList();
-    }
-
-    public void delete(Membro membro) {
-        Membro m = em.find(Membro.class, membro.getId());
-        em.remove(m);
-    }
-
     public List<Membro> getMembrosDoGrupo(Grupo grupo) {
         TypedQuery<Membro> query = em.createQuery("Select m from Membro m where m.grupo=:grupo", Membro.class);
         query.setParameter("grupo", grupo);
         return query.getResultList();
-    }
-
-    public Membro getMembroById(Integer id) {
-        return em.find(Membro.class, id);
     }
 
     public List<Membro> getMembrosDoMinisterio(Ministerio ministerio) {
@@ -62,7 +43,7 @@ public class MembroDAO extends TemplateDAO {
     }
 
     public List<Membro> getMembrosNaoNesseMinisterio(Ministerio ministerio) {
-        List<Membro> todos = list();
+        List<Membro> todos = listar();
         List<Membro> membrosMinisterio = getMembrosDoMinisterio(ministerio);
         List<Membro> naoDoMinisterio = new ArrayList<>();
         for (Membro membro : todos) {

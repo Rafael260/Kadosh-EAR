@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,11 +22,10 @@ import javax.persistence.Temporal;
  * @author Geraldo e Rafael
  */
 @Entity
-public class Membro implements Serializable {
+@AttributeOverride(name = "id", column = @Column(name = "id",  
+        nullable = false, columnDefinition = "BIGINT UNSIGNED"))
+public class Membro extends AbstractModel implements Serializable {
 
-    @GeneratedValue
-    @Id
-    private Integer id;
     private String nome;
     private String telefone;
     private String email;
@@ -39,7 +41,8 @@ public class Membro implements Serializable {
     private Boolean professor;
     private Boolean administrador;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "grupo_id")
     private Grupo grupo;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -55,8 +58,6 @@ public class Membro implements Serializable {
     @OneToMany
     private List<Matricula> matriculas;
     
-    
-
     public Membro() {
         nome = "";
         telefone = "";
@@ -105,14 +106,6 @@ public class Membro implements Serializable {
 
     public void setAdministrador(Boolean administrador) {
         this.administrador = administrador;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNome() {

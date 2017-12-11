@@ -12,30 +12,10 @@ import org.itbparnamirim.kadosh.model.Meditacao;
 import org.itbparnamirim.kadosh.model.Membro;
 
 @Stateless
-public class MeditacaoDAO extends TemplateDAO {
+public class MeditacaoDAO extends AbstractDAO<Meditacao> {
 
-    public Meditacao save(Meditacao meditacao) {
-        if (meditacao.getId() == null) {
-            em.persist(meditacao);
-        } else {
-            em.merge(meditacao);
-        }
-        return meditacao;
-    }
-
-    public List<Meditacao> list() {
-        TypedQuery<Meditacao> query = em.createQuery("Select m from Meditacao m", Meditacao.class);
-        List<Meditacao> meditacoes = query.getResultList();
-        return meditacoes;
-    }
-
-    public Meditacao find(Integer id) {
-        return em.find(Meditacao.class, id);
-    }
-
-    public void delete(Meditacao meditacao) {
-        Meditacao m = em.find(Meditacao.class, meditacao.getId());
-        em.remove(m);
+    public MeditacaoDAO(){
+        super(Meditacao.class);
     }
     
     public List<Membro> carregarMembrosDaMeditacao(Meditacao meditacao){

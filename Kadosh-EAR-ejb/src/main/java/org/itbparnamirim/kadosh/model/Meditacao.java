@@ -7,7 +7,9 @@ package org.itbparnamirim.kadosh.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,11 +23,10 @@ import org.hibernate.annotations.LazyCollectionOption;
  * @author rafao
  */
 @Entity
-public class Meditacao implements Serializable {
+@AttributeOverride(name = "id", column = @Column(name = "id",  
+        nullable = false, columnDefinition = "BIGINT UNSIGNED"))
+public class Meditacao extends AbstractModel implements Serializable {
 
-    @Id
-    @GeneratedValue
-    private Integer id;
     private String titulo;
     private String versiculoBase;
     private String aprofundando;
@@ -53,14 +54,6 @@ public class Meditacao implements Serializable {
         this.membros = new ArrayList<>();
     }
     
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getTitulo() {
         return titulo;
     }

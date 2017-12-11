@@ -69,8 +69,8 @@ public class MeditacaoBean implements MeditacaoBeanLocal {
         membro.setMeditacoes(membroDAO.getMeditacoesDoMembro(membro));
         meditacao.setMembros(meditacaoDAO.carregarMembrosDaMeditacao(meditacao));
         membro.adicionarMeditacao(meditacao);
-        meditacaoDAO.save(meditacao);
-        membroDAO.save(membro);
+        meditacaoDAO.salvar(meditacao);
+        membroDAO.salvar(membro);
     }
 
     @Override

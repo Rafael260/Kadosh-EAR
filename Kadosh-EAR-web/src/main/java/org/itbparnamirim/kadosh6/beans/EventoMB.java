@@ -8,13 +8,9 @@ package org.itbparnamirim.kadosh6.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
-import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.data.EventoDAO;
 import org.itbparnamirim.kadosh.model.Evento;
 
@@ -56,7 +52,7 @@ public class EventoMB implements Serializable{
     }
     
     public void carregarLista(){
-        this.eventos = eventoDAO.list();
+        this.eventos = eventoDAO.listar();
     }
     
     public String prepararCadastro(){
@@ -75,12 +71,12 @@ public class EventoMB implements Serializable{
     }
     
     public String salvar(){
-        eventoDAO.save(evento);
+        eventoDAO.salvar(evento);
         return "/pages/evento/exibirEventos.xhtml"+ManagedBeanUtil.REDIRECT;
     }
     
     public String deletar(Evento evento){
-        eventoDAO.delete(evento);
+        eventoDAO.remover(evento);
         ManagedBeanUtil.refresh();
         return "";
     }

@@ -23,7 +23,7 @@ public class MembroConverter implements Converter, Serializable{
         if (membroDAO == null){
             System.out.println("MEMBRO DAO NULO");
         }
-        Object object = membroDAO.getMembroById(Integer.parseInt(value));
+        Object object = membroDAO.encontrar(Long.parseLong(value));
         return object;
     }
 

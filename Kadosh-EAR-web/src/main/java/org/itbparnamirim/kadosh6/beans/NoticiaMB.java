@@ -7,15 +7,12 @@ package org.itbparnamirim.kadosh6.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
-import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.data.NoticiaDAO;
 import org.itbparnamirim.kadosh.ejb.NoticiaBeanLocal;
 import org.itbparnamirim.kadosh.model.Noticia;
@@ -59,7 +56,7 @@ public class NoticiaMB implements Serializable{
     }
     
     public void carregarLista(){
-        this.noticias = noticiaDAO.list();
+        this.noticias = noticiaDAO.listar();
     }
     
     public String prepararCadastro(){
@@ -78,13 +75,13 @@ public class NoticiaMB implements Serializable{
     }
     
     public String salvar(){
-        noticiaDAO.save(noticia);
+        noticiaDAO.salvar(noticia);
         return "/pages/noticia/exibirNoticias.xhtml"+ManagedBeanUtil.REDIRECT;
     }
     
     public String deletar(Noticia noticia){
         try {
-            noticiaDAO.delete(noticia);
+            noticiaDAO.remover(noticia);
         } catch (Exception ex) {
             Logger.getLogger(NoticiaMB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -92,8 +89,8 @@ public class NoticiaMB implements Serializable{
         return "";
     }
     
-    public void carregarNoticia(int id){
-        this.noticia = noticiaDAO.find(id);
+    public void carregarNoticia(Long id){
+        this.noticia = noticiaDAO.encontrar(id);
     }
     
     public void carregarAtivas(){

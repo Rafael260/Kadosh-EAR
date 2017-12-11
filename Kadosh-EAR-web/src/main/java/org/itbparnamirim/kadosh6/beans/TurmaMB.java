@@ -8,12 +8,9 @@ package org.itbparnamirim.kadosh6.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.data.MembroDAO;
 import org.itbparnamirim.kadosh.data.TurmaDAO;
 import org.itbparnamirim.kadosh.model.Membro;
@@ -57,7 +54,7 @@ public class TurmaMB implements Serializable {
     }
 
     public void carregarLista() {
-        this.turmas = turmaDAO.list();
+        this.turmas = turmaDAO.listar();
     }
 
     public String prepararConsulta(Turma turma) {
@@ -65,8 +62,8 @@ public class TurmaMB implements Serializable {
         return "/pages/turma/detalharTurma.xhtml" + ManagedBeanUtil.REDIRECT;
     }
 
-    public String prepararEdicao(Integer id) {
-        Turma turmaSelecionada = turmaDAO.find(id);
+    public String prepararEdicao(Long id) {
+        Turma turmaSelecionada = turmaDAO.encontrar(id);
         this.turma = turmaSelecionada;
         return "/pages/turma/cadastroTurma.xhtml" + ManagedBeanUtil.REDIRECT;
     }
@@ -81,13 +78,13 @@ public class TurmaMB implements Serializable {
     }
 
     public String deletar(Turma turma) {
-        turmaDAO.delete(turma);
+        turmaDAO.remover(turma);
         ManagedBeanUtil.refresh();
         return "";
     }
 
     public String salvar() {
-        turmaDAO.save(turma);
+        turmaDAO.salvar(turma);
         limparObjetos();
         return "/pages/turma/exibirTurmas.xhtml" + ManagedBeanUtil.REDIRECT;
     }

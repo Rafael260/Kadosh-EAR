@@ -12,15 +12,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
-import javax.transaction.SystemException;
 import org.itbparnamirim.kadosh.data.MeditacaoDAO;
 import org.itbparnamirim.kadosh.data.MembroDAO;
-import org.itbparnamirim.kadosh.ejb.MeditacaoBean;
 import org.itbparnamirim.kadosh.model.Meditacao;
 import org.itbparnamirim.kadosh.model.Membro;
 
@@ -114,7 +109,7 @@ public class MeditacaoMB implements Serializable {
     }
 
     public void carregarLista() {
-        this.meditacoes = meditacaoDAO.list();
+        this.meditacoes = meditacaoDAO.listar();
     }
 
     public String prepararCadastro() {
@@ -133,13 +128,13 @@ public class MeditacaoMB implements Serializable {
     }
 
     public String salvar() {
-        meditacaoDAO.save(meditacao);
+        meditacaoDAO.salvar(meditacao);
         return "/pages/meditacao/exibirMeditacoes.xhtml" + ManagedBeanUtil.REDIRECT;
     }
 
     public String deletar(Meditacao meditacao) {
         try {
-            meditacaoDAO.delete(meditacao);
+            meditacaoDAO.remover(meditacao);
         } catch (Exception ex) {
             Logger.getLogger(MeditacaoMB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -147,8 +142,8 @@ public class MeditacaoMB implements Serializable {
         return "";
     }
 
-    public String meditar(Integer idMeditacao) {
-        this.meditacao = meditacaoDAO.find(idMeditacao);
+    public String meditar(Long idMeditacao) {
+        this.meditacao = meditacaoDAO.encontrar(idMeditacao);
         HttpSession session = ManagedBeanUtil.getSession();
         session.setAttribute("meditacao", meditacao);
         return "/pages/meditacao/inicioMeditacao.xhtml" + ManagedBeanUtil.REDIRECT;

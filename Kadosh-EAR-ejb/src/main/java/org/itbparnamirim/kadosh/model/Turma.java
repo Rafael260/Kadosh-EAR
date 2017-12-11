@@ -8,23 +8,24 @@ package org.itbparnamirim.kadosh.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 @Entity
-public class Turma implements Serializable {
+@AttributeOverride(name = "id", column = @Column(name = "id",  
+        nullable = false, columnDefinition = "BIGINT UNSIGNED"))
+public class Turma extends AbstractModel implements Serializable {
     
-    @Id
-    @GeneratedValue
-    private Integer id;
     
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "disciplina_id")
     private Disciplina disciplina;
     
     private String anoLetivo;
@@ -33,6 +34,7 @@ public class Turma implements Serializable {
     private List<Matricula> matriculas;
     
     @OneToOne //(fetch = FetchType.EAGER, mappedBy="turmas", cascade=CascadeType.ALL)
+    @JoinColumn(name = "professor_id")
     private Membro professor;
 
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -42,23 +44,6 @@ public class Turma implements Serializable {
     private Date dataFim;
 
     public Turma() {
-    }
-
-    public Turma(Integer id, Disciplina disciplina, String anoLetivo, List<Matricula> matriculas, Membro professor) {
-        this.id = id;
-        this.disciplina = disciplina;
-        this.anoLetivo = anoLetivo;
-        this.matriculas = matriculas;
-        this.professor = professor;
-    }
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Disciplina getDisciplina() {

@@ -3,9 +3,12 @@ package org.itbparnamirim.kadosh.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -14,25 +17,22 @@ import javax.persistence.OneToMany;
  * @author Geraldo Jr
  */
 @Entity
-public class Matricula implements Serializable{
-    @Id
-    @GeneratedValue
-    private int id;
+@AttributeOverride(name = "id", column = @Column(name = "id",  
+        nullable = false, columnDefinition = "BIGINT UNSIGNED"))
+public class Matricula extends AbstractModel implements Serializable{
+
     @ManyToOne
+    @JoinColumn(name = "membro_id")
     private Membro aluno;
+    
     private BigDecimal nota;
+    
     @ManyToOne
+    @JoinColumn(name = "turma_id")
     private Turma turma;
+    
     @OneToMany
     private List<Frequencia> frequencia;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public Membro getAluno() {
         return aluno;
